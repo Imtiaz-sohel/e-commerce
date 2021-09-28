@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['verified'])->name('dashboard');
-
 require __DIR__.'/auth.php';
+
+// DASHBOARD CONTROLLER STARTS
+Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
+  Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
+  Route::resource('/category',CategoryController::class);
+});
+

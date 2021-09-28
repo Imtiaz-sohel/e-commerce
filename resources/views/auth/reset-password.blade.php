@@ -18,7 +18,12 @@
         </div>
         {{-- Password --}}
         <div class="form-group">
-            <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password">
+            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password">
+            @error('password')
+                <div class="text-danger">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
         {{-- Confirm Password --}}
         <div class="form-group">

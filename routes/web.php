@@ -29,5 +29,13 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
   Route::resource('/category',CategoryController::class);
   Route::get('/category-trash/{id}',[CategoryController::class,'categoryRestore'])->name('categoryRestore');
   Route::get('/category-per-delete/{id}',[CategoryController::class,'categoryPerDelete'])->name('categoryPerDelete');
+  Route::get('/category-status/{id}',[CategoryController::class,'categoryStatus'])->name('categoryStatus');
+
+//SUBCATEGORY CONTROLLER
+  //set url in only one word 
+  Route::resource('/sub-category',SubCategoryController::class);
+  Route::get('/subcategory-status/{id}',[SubCategoryController::class,'subcategoryStatus'])->name('subcategoryStatus');   
+  Route::get('/subcategory-restore/{id}',[SubCategoryController::class,'subCategoryRestore'])->name('subCategoryRestore');   
+  Route::get('/subcategory-per-delete/{id}',[SubCategoryController::class,'subCategoryPerDelete'])->name('subCategoryPerDelete');   
 });
 

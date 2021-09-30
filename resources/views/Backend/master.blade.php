@@ -57,7 +57,7 @@
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
         {{-- Sub Category List --}}
-        <a href="{{ route('subcategory-list.index') }}" class="br-menu-link @yield('subcategory')">
+        <a href="{{ route('sub-category.index') }}" class="br-menu-link @yield('subcategory')">
             <div class="br-menu-item">
               <i class="fa fa-folder"></i>
               <span class="menu-item-label">Sub-Category List</span>
@@ -210,7 +210,7 @@
           </div><!-- dropdown -->
           <div class="dropdown">
             <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-              <span class="logged-name hidden-md-down">N/A</span>
+              <span class="logged-name hidden-md-down">{{ Auth::user()->name }}</span>
               <img src="http://via.placeholder.com/64x64" class="wd-32 rounded-circle" alt="">
               <span class="square-10 bg-success"></span>
             </a>

@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\SubCategory;
+use App\Models\subCategory;
+
 
 class Category extends Model
 {
@@ -20,8 +21,7 @@ class Category extends Model
         return str_replace(' ','-',strtolower($value));
     }
 
-    function subcategory(){
-        return $this->hasMany(SubCategory::class,'category_id');
+    function category(){
+        return $this->hasMany(subCategory::class,'category_id');
     }
-
 }

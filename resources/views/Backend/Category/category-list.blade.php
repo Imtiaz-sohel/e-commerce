@@ -24,6 +24,7 @@
                           <tr>
                             <th>SL</th>
                             <th>Category</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -33,12 +34,23 @@
                               <td>{{ $categories->firstItem() + $key }}</td>
                               <td>{{ $category->category_name }}</td>
                               <td>
-                                  <a class="btn btn-outline-success" href="{{ route('category.edit',$category->id) }}"><i class="fa fa-edit"></i></a>
-                                  <form action="{{ route('category.destroy',$category->id) }}" method="POST">
+                                  @if($category->status==1)
+                                   <a class="btn btn-outline-success" href="{{ route('categoryStatus',$category->id) }}">ACTIVE</a>
+                                  @else
+                                   <a class="btn btn-outline-danger" href="{{ route('categoryStatus',$category->id) }}">INACTIVE</a>
+                                  @endif
+                              </td>
+                              <td>
+                                  @if($category->status==1)
+                                   <a class="btn btn-outline-success" href="{{ route('category.edit',$category->id) }}"><i class="fa fa-edit"></i></a>
+                                   <form action="{{ route('category.destroy',$category->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button style="cursor:pointer" class="btn btn-outline-danger" type="submit"><i class="fa fa-trash"></i></button>
                                   </form>
+                                  @else
+                                    {{ 'Not Allowed' }}
+                                  @endif
                               </td>
                             </tr>
                             @endforeach

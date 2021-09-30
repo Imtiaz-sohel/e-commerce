@@ -107,4 +107,18 @@ class CategoryController extends Controller
         return back();
     }
 
+    // Category Status Update
+    function categoryStatus($id){
+         $catStatus = Category::findOrFail($id);
+         if ($catStatus->status==1 ) {
+            $catStatus->status=2;
+            $catStatus->save();
+         }
+         else{
+            $catStatus->status=1;
+            $catStatus->save();
+         }
+         return back();
+    }
+
 }

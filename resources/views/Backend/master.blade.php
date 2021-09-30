@@ -63,6 +63,27 @@
               <span class="menu-item-label">Sub-Category List</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+        {{-- Color List --}}
+        <a href="{{ route('color.index') }}" class="br-menu-link @yield('color')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Color List</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+        {{-- Size List --}}
+        <a href="{{ route('size.index') }}" class="br-menu-link @yield('size')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Size List</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+        {{-- Size List --}}
+        <a href="{{ route('brand.index') }}" class="br-menu-link @yield('brand')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Brand List</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->

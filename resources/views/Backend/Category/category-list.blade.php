@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="br-section-wrapper">
-                    <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10 text-center">ALL Category ()</h6>
+                    <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10 text-center">ALL Category ({{ $categoryCount }})</h6>
                     <div class="bd bd-gray-300 rounded table-responsive">
                       <table class="table mg-b-0">
                         <thead>
@@ -28,24 +28,72 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>01</td>
-                            <td>Hello</td>
-                            <td>Hii</td>
-                          </tr>
+                            @foreach($categories as $key => $category)                                
+                            <tr>
+                              <td>{{ $categories->firstItem() + $key }}</td>
+                              <td>{{ $category->category_name }}</td>
+                              <td>
+                                  <a class="btn btn-outline-success" href="{{ route('category.edit',$category->id) }}"><i class="fa fa-edit"></i></a>
+                                  <form action="{{ route('category.destroy',$category->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button style="cursor:pointer" class="btn btn-outline-danger" type="submit"><i class="fa fa-trash"></i></button>
+                                  </form>
+                              </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                       </table>
                     </div><!-- bd -->
+                </div>
+                {{ $categories->links() }}
+                <div class="row mt-5">
+                    <div class="col-xl-12">
+                        <div class="br-section-wrapper">
+                            <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10 text-center">ALL Category</h6>
+                            <div class="bd bd-gray-300 rounded table-responsive">
+                              <table class="table mg-b-0">
+                                <thead>
+                                  <tr>
+                                    <th>SL</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($categoryTrashes as $key => $categoryTrashe)
+                                    <tr>
+                                      <td>{{ $categoryTrashes->firstItem() + $key }}</td>
+                                      <td>{{ $categoryTrashe->category_name }}</td>
+                                      <td>
+                                          <a href="{{ route('categoryRestore',$categoryTrashe->id)}}" class="btn btn-outline-success">Restore</a>
+                                          <a href="{{ route('categoryPerDelete',$categoryTrashe->id) }}" class="btn btn-outline-danger">Permanent Delete</a>
+                                      </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        {{ $categoryTrashes->links() }}
+                    </div>
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="form-layout form-layout-5 bg-white">
                     <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10 text-center">Add Category</h6>
-                    <form action="#" method="POST">
+                    <form action="{{ route('category.store') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <label class="col-sm-4 form-control-label"><span class="tx-danger">*</span>Category:</label>
+                            {{-- category name --}}
                             <div class="col-sm-8 mg-t-10 mg-sm-t-0">
-                              <input type="text" name="" id="" value="" class="form-control" placeholder="Enter firstname">
+                              <input type="text" name="category_name" id="category_name" value="{{ old('category_name') }}" class="form-control @error('category_name') is-invalid @enderror" placeholder="Enter category">
+                              @error('category_name')
+                                  <div class="text-danger">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                             </div>
                           </div>
                           <div class="row mg-t-30">

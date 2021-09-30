@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,9 @@ require __DIR__.'/auth.php';
 // DASHBOARD CONTROLLER STARTS
 Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
   Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
+//CATEGORY CONTROLLER    
   Route::resource('/category',CategoryController::class);
+  Route::get('/category-trash/{id}',[CategoryController::class,'categoryRestore'])->name('categoryRestore');
+  Route::get('/category-per-delete/{id}',[CategoryController::class,'categoryPerDelete'])->name('categoryPerDelete');
 });
 

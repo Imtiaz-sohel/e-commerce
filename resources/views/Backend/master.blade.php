@@ -56,6 +56,13 @@
               <span class="menu-item-label">Category List</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+        {{-- Sub Category List --}}
+        <a href="{{ route('subcategory-list.index') }}" class="br-menu-link @yield('subcategory')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Sub-Category List</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->

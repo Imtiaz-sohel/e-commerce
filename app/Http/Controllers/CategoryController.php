@@ -14,7 +14,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('Backend.Category.category-list');
+        return view('Backend.Category.category-list',[
+            'categories'=>Category::latest()->simplePaginate(3),
+            'categoryCount'=>Category::count(),
+            'categoryTrashes'=>Category::onlyTrashed()->simplePaginate(2),
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        // return view('Backend.Category.category-list');
     }
 
     /**
@@ -33,9 +37,17 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+       $request->validate([
+           'category_name'=>['required','unique:categories,category_name']
+       ],[
+           'category_name.required'=>'Enter Category',
+           'category_name.unique'=>'Category Already Exists',
+       ]); 
+       $category = new Category;
+       $category->category_name=$request->category_name;
+       $category->save();
+       return back();
     }
 
     /**
@@ -55,9 +67,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
-    {
-        //
+    public function edit(Category $category){
+        return view('Backend.Category.category-edit',[
+            'categoryEdit'=>$category,
+        ]);
     }
 
     /**
@@ -67,9 +80,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
-    {
-        //
+    public function update(Request $request, Category $category){
+        $category->category_name=$request->category_name;
+        $category->save();
+        return redirect()->route('category.index');
     }
 
     /**
@@ -78,8 +92,19 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
-    {
-        //
+    public function destroy(Category $category){
+        $category->delete();
+        return back();
     }
+
+    function categoryRestore($id){
+        Category::onlyTrashed()->findOrFail($id)->restore();
+        return back();
+    }
+
+    function categoryPerDelete($id){
+        Category::onlyTrashed()->findOrFail($id)->forceDelete();
+        return back();
+    }
+
 }

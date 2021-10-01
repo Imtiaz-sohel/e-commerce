@@ -84,6 +84,18 @@
               <span class="menu-item-label">Brand List</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+        {{-- Product --}}
+        <a href="{{ route('product.index') }}" class="br-menu-link @yield('product')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Product</span>
+              <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{ route('product.index') }}" class="nav-link @yield('listActive')">Product List</a></li>
+            <li class="nav-item"><a href="{{ route('product.create') }}" class="nav-link @yield('addActive')">Product Add</a></li>
+          </ul>
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->
@@ -674,6 +686,7 @@
     <script src="{{ asset('assets/backend/js/bracket.js') }}"></script>
     <script src="{{ asset('assets/backend/js/ResizeSensor.js') }}"></script>
     <script src="{{ asset('assets/backend/js/dashboard.js') }}"></script>
+     @yield('footer_js')
     <script>
       $(function(){
         'use strict'

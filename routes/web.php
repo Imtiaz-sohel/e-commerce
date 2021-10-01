@@ -4,6 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,8 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
   Route::get('/brand-status/{id}',[BrandController::class,'brandStatus'])->name('brandStatus');     
   Route::get('/brand-restore/{id}',[BrandController::class,'brandRestore'])->name('brandRestore');     
   Route::get('/brand-permanent-delete/{id}',[BrandController::class,'brandPermanent'])->name('brandPermanent');
-//PRODUCT CONTROLLER STARTS    
+//PRODUCT CONTROLLER STARTS
+  Route::resource('/product',ProductController::class);
 });
+Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);  
 

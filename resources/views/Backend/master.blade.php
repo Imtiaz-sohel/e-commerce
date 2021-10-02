@@ -15,6 +15,7 @@
     <link href="{{ asset('assets/backend/lib/jquery-switchbutton/jquery.switchButton.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/lib/rickshaw/rickshaw.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/lib/chartist/chartist.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('assets/backend/css/bracket.css') }}">
@@ -685,6 +686,7 @@
     <script src="{{ asset('assets/backend/lib/rickshaw/rickshaw.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/bracket.js') }}"></script>
     <script src="{{ asset('assets/backend/js/ResizeSensor.js') }}"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{ asset('assets/backend/js/dashboard.js') }}"></script>
      @yield('footer_js')
     <script>
@@ -709,6 +711,29 @@
           }
         }
       });
+    </script>
+    {{-- Toaster Alert JS --}}
+    <script>
+        @if(Session::has('message'))
+        var type = "{{ Session::get('alert-type','info') }}"
+        switch(type){
+            case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+
+            case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+
+            case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+
+            case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break; 
+        }
+        @endif 
     </script>
   </body>
 </html>

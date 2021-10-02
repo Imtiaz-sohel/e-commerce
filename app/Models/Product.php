@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Category;
+use App\Models\subCategory;
+use App\Models\Brand;
+use App\Models\ProductGallery;
+use App\Models\ProductAttribute;
+
 
 class Product extends Model
 {
@@ -17,5 +23,21 @@ class Product extends Model
 
     private function slugify($value){
         return str_replace(' ','-',strtolower($value));
+    }
+
+    function category(){
+        return $this->belongsTo(Category::class,'category_id');
+    }
+    function subcategory(){
+        return $this->belongsTo(subCategory::class,'subcategory_id');
+    }
+    function brand(){
+        return $this->belongsTo(Brand::class,'brand_id');
+    }
+    function productGallery(){
+        return $this->hasMany(ProductGallery::class,'product_id');
+    }
+    function productAttribute(){
+        return $this->hasMany(ProductAttribute::class,'product_id');
     }
 }

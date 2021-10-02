@@ -25,7 +25,7 @@
                 <div class="row">
                     <label class="col-sm-2 form-control-label"><span class="tx-danger">*</span>Title:</label>
                     <div class="col-sm-5 mg-t-10 mg-sm-t-0">
-                      <input type="text" name="product_title" id="product_title" value="{{ old('product_title') }}" class="form-control @error('product_title') is-invalid @enderror" placeholder="Enter firstname">
+                      <input type="text" name="product_title" id="product_title" value="{{ old('product_title') }}" class="form-control @error('product_title') is-invalid @enderror" placeholder="Enter Product Title">
                       @error('product_title')
                           <div class="text-danger">
                               {{ $message }}
@@ -81,7 +81,7 @@
                       @enderror
                     </div>
                   </div>
-                {{-- Product Name --}}
+                {{-- Product Summary --}}
                 <div class="row mg-t-30">
                     <label class="col-sm-2 form-control-label"><span class="tx-danger">*</span>Summary:</label>
                     <div class="col-sm-5 mg-t-10 mg-sm-t-0">
@@ -93,11 +93,11 @@
                       @enderror
                     </div>
                   </div>
-                {{-- Description --}}
+                {{-- Product Description --}}
                 <div class="row mg-t-30">
                     <label class="col-sm-2 form-control-label"><span class="tx-danger">*</span>Description:</label>
                     <div class="col-sm-5 mg-t-10 mg-sm-t-0">
-                      <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Write Product Description"></textarea>
+                      <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="my-editor" placeholder="Write Product Description"></textarea>
                       @error('description')
                           <div class="text-danger">
                               {{ $message }}
@@ -105,6 +105,79 @@
                       @enderror
                     </div>
                   </div>
+                {{-- PRODUCT ATTRIBUTE VARIATION(COLOR,SIZE,QUANTITY,PRICE) --}}              
+                <div class="row mg-t-20">
+                    <label class="col-sm-2 form-control-label">Product Attributes: <span class="tx-danger">*</span></label>
+                    <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                        <div id="dynamic-field-1" class="form-group dynamic-field">
+                            <div class="row">
+                                {{-- Product Color --}}
+                                <div class="col-3">
+                                    <label for="color_id" class="font-weight-bold">Color</label>
+                                    <select class="form-control @error('color_id') is-invalid @enderror"
+                                        name="color_id[]" id="color_id">
+                                        <option value>Select One</option>
+                                        @foreach($colors as $key => $color)
+                                            <option value="{{ $color->id }}">{{ $color->color_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('color_id')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                {{-- Product Size --}}
+                                <div class="col-3">
+                                    <label for="size_id" class="font-weight-bold">Size</label>
+                                    <select class="form-control @error('size_id') is-invalid @enderror"
+                                        name="size_id[]" id="size_id">
+                                           <option value>Select One</option>
+                                        @foreach($sizes as $key => $size)
+                                           <option value="{{ $size->id }}">{{ $size->size_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                {{-- Product Quantity --}}
+                                <div class="col-3">
+                                    <label for="quantity" class="font-weight-bold">Quantity</label>
+                                    <input type="text"
+                                        class="form-control @error('quantity') is-invalid @enderror"
+                                        name="quantity[]" id="quantity" placeholder="10" />
+                                    @error('quantity')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                {{-- Product Price --}}
+                                <div class="col-3">
+                                    <label for="product_price" class="font-weight-bold">Product Price</label>
+                                    <input type="text"
+                                        class="form-control @error('product_price') is-invalid @enderror"
+                                        name="product_price[]" id="product_price" placeholder="100" />
+                                    @error('product_price')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Add Remove Button to Muliple Variation Product --}}
+                        <div class="clearfix form-group mt-4">
+                            <button type="button" id="add-button"
+                                class="btn btn-secondary float-left text-uppercase shadow-sm"><i
+                                    class="fa fa-plus"></i> Add</button>
+                            <button type="button" id="remove-button" class="btn btn-secondary float-left text-uppercase ml-1" disabled="disabled"><i class="fa fa-minus"></i> Remove</button>
+                        </div>
+                    </div>
+                </div>
                 {{-- Thumbnail --}}
                 <div class="row mg-t-30">
                     <label class="col-sm-2 form-control-label"><span class="tx-danger">*</span>Thumbnail:</label>
@@ -136,7 +209,7 @@
                     <label class="col-sm-2 form-control-label"><span class="tx-danger">*</span>Minimum Price:</label>
                     <div class="col-sm-5 mg-t-10 mg-sm-t-0">
                         <input class="form-control @error('price') is-invalid @enderror" type="text" name="price" id="price" placeholder="Minimun Price">
-                      @error('thumbnail')
+                      @error('price')
                           <div class="text-danger">
                               {{ $message }}
                           </div>
@@ -168,7 +241,7 @@
 @endsection
 @section('footer_js')
 <script>
-    // get subcategory after select category
+// get subcategory after select category
 $('#category_id').change(function() {
     var category_id = $(this).val();
     if (category_id) {
@@ -192,5 +265,84 @@ $('#category_id').change(function() {
         $("#subcategory_id").empty();
     }
 });
+</script>
+<script>
+// ATTRIBUTE ADD REMOVE FIELD
+var buttonAdd = $("#add-button");
+var buttonRemove = $("#remove-button");
+var className = ".dynamic-field";
+var count = 0;
+var field = "";
+var maxFields = 5;
+
+function totalFields() {
+    return $(className).length;
+}
+
+function addNewField() {
+    count = totalFields() + 1;
+    field = $("#dynamic-field-1").clone();
+    field.attr("id", "dynamic-field-" + count);
+    field.children("label").text("Field " + count);
+    field.find("input").val("");
+    $(className + ":last").after($(field));
+}
+
+function removeLastField() {
+    if (totalFields() > 1) {
+        $(className + ":last").remove();
+    }
+}
+
+function enableButtonRemove() {
+    if (totalFields() === 2) {
+        buttonRemove.removeAttr("disabled");
+        buttonRemove.addClass("shadow-sm");
+    }
+}
+
+function disableButtonRemove() {
+    if (totalFields() === 1) {
+        buttonRemove.attr("disabled", "disabled");
+        buttonRemove.removeClass("shadow-sm");
+    }
+}
+
+function disableButtonAdd() {
+    if (totalFields() === maxFields) {
+        buttonAdd.attr("disabled", "disabled");
+        buttonAdd.removeClass("shadow-sm");
+    }
+}
+
+function enableButtonAdd() {
+    if (totalFields() === (maxFields - 1)) {
+        buttonAdd.removeAttr("disabled");
+        buttonAdd.addClass("shadow-sm");
+    }
+}
+
+buttonAdd.click(function() {
+    addNewField();
+    enableButtonRemove();
+    disableButtonAdd();
+});
+
+buttonRemove.click(function() {
+    removeLastField();
+    disableButtonRemove();
+    enableButtonAdd();
+});
+</script>
+{{-- Ck Editor --}}
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script>
+    var options = {
+      filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+      filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+      filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+      filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+    };
+        CKEDITOR.replace('my-editor', options);
 </script>
 @endsection

@@ -59,5 +59,9 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
 //PRODUCT CONTROLLER STARTS
   Route::resource('/product',ProductController::class);
 });
-Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);  
+Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
+// LARAVEL FILE MANAGER STARTS 
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Category;
+use App\Models\Product;
 
 class subCategory extends Model
 {
@@ -21,5 +22,8 @@ class subCategory extends Model
     }
     function category(){
         return $this->belongsTo(Category::class,'category_id');
+    }
+    function product(){
+        return $this->hasMany(Product::class,'subcategory_id');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\subCategory;
+use App\Models\Product;
 
 
 class Category extends Model
@@ -21,7 +22,10 @@ class Category extends Model
         return str_replace(' ','-',strtolower($value));
     }
 
-    function category(){
+    function subcategory(){
         return $this->hasMany(subCategory::class,'category_id');
+    }
+    function product(){
+        return $this->hasMany(Product::class,'category_id');
     }
 }

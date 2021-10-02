@@ -16,38 +16,93 @@
           <span class="breadcrumb-item active">Product View</span>
         </nav>
     </div>
+    <style>
+        .secPading{
+            padding: 20px 0;
+        }
+    </style>
     <div class="br-pagebody">
-        <div class="br-section-wrapper">
-            <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10 text-center">ALL Product ()</h6>
+        <div class="br-section-wrapper secPading">
+            <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10 text-center">ALL Product ({{ $productCount }})</h6>
+            <a style="float: right" href="{{ route('product.create') }}"> <i class="fa fa-plus"></i> ADD </a>
             <div class="bd bd-gray-300 rounded table-responsive">
               <table class="table mg-b-0">
                 <thead>
                   <tr>
                     <th>SL</th>
                     <th>Product</th>
-                    <th >Category</th>
-                    <th>SubCategory</th>
+                    <th>Cat.</th>
+                    <th>SubCat.</th>
                     <th>Brand</th>
                     <th>Color</th>
                     <th>Size</th>
-                    <th>Summary</th>
-                    <th>Description</th>
-                    <th>Thumbnail</th>
-                    <th>Gallery</th>
-                    <th>Quantity</th>
+                    <th>Quan.</th>
                     <th>Price</th>
+                    <th>Sum.</th>
+                    <th>Des.</th>
+                    <th>Thumb.</th>
+                    <th>Gallery</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>01</td>
-                    <td>Hello</td>
-                    <td>Hii</td>
-                  </tr>
+                    @foreach($products as $key => $product)                        
+                    <tr>
+                      <td>{{ $products->firstItem() + $key }}</td>
+                      <td>{{ $product->product_title }}</td>
+                      <td>{{ $product->category->category_name }}</td>
+                      <td>{{ $product->subcategory->subcategory_name }}</td>
+                      <td>{{ $product->brand->brand_name }}</td>
+                      <td>
+                          <ul>
+                              @foreach($product->productAttribute as $key => $colors)
+                                <li>{{ $colors->color->color_name }}</li>
+                              @endforeach
+                          </ul>
+                      </td>
+                      <td>
+                          <ul>
+                              @foreach($product->productAttribute as $key => $sizes)
+                                <li>{{ $sizes->size->size_name }}</li>
+                              @endforeach
+                          </ul>
+                      </td>
+                      <td>
+                          <ul>
+                              @foreach($product->productAttribute as $key => $quantity)
+                                <li>{{ $quantity->quantity }}</li>
+                              @endforeach
+                          </ul>
+                      </td>
+                      <td>
+                          <ul>
+                              @foreach($product->productAttribute as $key => $productPrice)
+                                <li>{{ $productPrice->product_price }}</li>
+                              @endforeach
+                          </ul>
+                      </td>
+                      <td>{{ Str::limit($product->summary,'10') }}</td>
+                      <td>{!! Str::limit($product->description,'20') !!}</td>
+                      <td>
+                          <img width="50%" src="{{ asset('product/thumbnail/'.$product->thumbnail) }}" alt="{{ $product->product_title }}">
+                      </td>
+                      <td>
+                          @foreach($product->productGallery as $key => $gallery)
+                             <img  width="50%" src="{{ asset('product/gallery/'.$gallery->image_name) }}" alt="">
+                          @endforeach
+                      </td>
+                      <td>
+                          <a class="btn btn-outline-success" href="{{ route('product.edit',$product->id) }}"><i class="fa fa-edit"></i></a>
+                          <form action="" method="post">
+                              <button class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+                          </form>
+                      </td>
+                    </tr>
+                    @endforeach
                 </tbody>
               </table>
-            </div><!-- bd -->
+            </div>
+            {{ $products->links() }}
         </div>
     </div>
     <footer class="br-footer">

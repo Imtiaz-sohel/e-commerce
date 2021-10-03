@@ -96,6 +96,7 @@
           <ul class="br-menu-sub nav flex-column">
             <li class="nav-item"><a href="{{ route('product.index') }}" class="nav-link @yield('listActive')">Product List</a></li>
             <li class="nav-item"><a href="{{ route('product.create') }}" class="nav-link @yield('addActive')">Product Add</a></li>
+            <li class="nav-item"><a href="{{ route('productTrash') }}" class="nav-link @yield('trashActive')">Product Trash</a></li>
           </ul>
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->

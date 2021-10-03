@@ -84,16 +84,18 @@
                       <td>{{ Str::limit($product->summary,'10') }}</td>
                       <td>{!! Str::limit($product->description,'20') !!}</td>
                       <td>
-                          <img width="50%" src="{{ asset('product/thumbnail/'.$product->thumbnail) }}" alt="{{ $product->product_title }}">
+                          <img width="30%" src="{{ asset('product/thumbnail/'.$product->thumbnail) }}" alt="{{ $product->product_title }}">
                       </td>
                       <td>
                           @foreach($product->productGallery as $key => $gallery)
-                             <img  width="50%" src="{{ asset('product/gallery/'.$gallery->image_name) }}" alt="">
+                             <img  width="20%" src="{{ asset('product/gallery/'.$gallery->image_name) }}" alt="">
                           @endforeach
                       </td>
                       <td>
                           <a class="btn btn-outline-success" href="{{ route('product.edit',$product->id) }}"><i class="fa fa-edit"></i></a>
-                          <form action="" method="post">
+                          <form action="{{ route('product.destroy',$product->id) }}" method="POST">
+                              @csrf
+                              @method('DELETE')
                               <button class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
                           </form>
                       </td>

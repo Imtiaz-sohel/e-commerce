@@ -57,6 +57,7 @@ class ProductController extends Controller
             'summary'=>['required'],
             'description'=>['required'],
             'price'=>['required'],
+            'thumbnail'=>['required'],
             'image_name'=>['required'],           
         ],[
             'product_title.required'=>'Enter Title',
@@ -82,7 +83,7 @@ class ProductController extends Controller
         if ($request->hasFile('thumbnail')) {
             $thumbnail=$request->file('thumbnail');
             $product = Product::findOrFail($product->id);
-            $file_name = $product->id.'.'.$product->product_title.'.'.$thumbnail->getClientOriginalExtension();
+            $file_name = $product->id.'_'.$product->product_title.'.'.$thumbnail->getClientOriginalExtension();
             Image::make($thumbnail)->save(public_path('product/thumbnail/'.$file_name));
             $product->thumbnail=$file_name;
             $product->save();
@@ -122,9 +123,8 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
-    {
-        //
+    public function show(Product $product){
+        // 
     }
 
     /**
@@ -134,7 +134,15 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product){
-        // edit
+        $subcategory = SubCategory::where('category_id',$product->category_id)->get();
+        return view('Backend.Product.product-edit',[
+            'categories'=>Category::all(),
+            'brands'=>Brand::all(),
+            'colors'=>Color::all(),
+            'sizes'=>Size::all(),
+            'productEdit'=>$product,
+            'subcategories'=>$subcategory,
+        ]);
     }
 
     /**
@@ -144,9 +152,78 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
-    {
-        //
+    public function update(Request $request, Product $product){
+        $request->validate([
+            'product_title'=>['required'],
+            'category_id'=>['required'],
+            'subcategory_id'=>['required'],
+            'brand_id'=>['required'],
+            'summary'=>['required'],
+            'description'=>['required'],
+            'price'=>['required'],
+        ],[
+            'product_title.required'=>'Enter Title',
+            'category_id.required'=>'Select Category',
+            'subcategory_id.required'=>'Select Sub-Category',
+            'brand_id.required'=>'Select Brand',
+            'summary.required'=>'Enter Summary',
+            'description.required'=>'Enter Description',
+            'price.required'=>'Enter Minimum Price Price',
+        ]);
+        $product->product_title=$request->product_title;
+        $product->category_id=$request->category_id;
+        $product->subcategory_id=$request->subcategory_id;
+        $product->brand_id=$request->brand_id;
+        $product->summary=$request->summary;
+        $product->description=$request->description;
+        $product->price=$request->price;
+        $product->save();
+        // thumbnail Update
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $file_name=$product->id.'_'.$product->product_title.'.'.$thumbnail->getClientOriginalExtension();
+            $oldPath=public_path('product/thumbnail/'.$product->thumbnail);
+            if (file_exists($oldPath)) {
+                unlink($oldPath);
+            }
+            Image::make($thumbnail)->save('product/thumbnail/'.$file_name);
+            $product->thumbnail=$file_name;
+            $product->save();
+        }
+        // Product Gallery Update
+        if ($request->hasFile('image_name')) {
+            $ProductGallery = $request->file('image_name');
+            foreach ($ProductGallery as $key => $galleries) {
+                $pGallery = ProductGallery::findOrFail($request->pgallery[$key]);
+                $file_name=$pGallery->product_id.'-'.$request->product_title.Str::random(3).'.'.$galleries->getClientOriginalExtension();
+                $oldPath=public_path('product/gallery/'.$pGallery->image_name);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+                Image::make($galleries)->save(public_path('product/gallery/'.$file_name));
+                $pGallery->product_id=$pGallery->product_id;
+                $pGallery->image_name=$file_name;
+                $pGallery->save();
+            }
+        }
+
+        $quantities = $request->quantity;
+        foreach ($quantities as $key => $quantity) {
+            $attributeUpdate = ProductAttribute::findOrFail($request->attribute_id[$key]);
+            $attributeUpdate->product_id=$attributeUpdate->product_id;
+            $attributeUpdate->color_id=$request->color_id[$key];
+            $attributeUpdate->size_id=$request->size_id[$key];
+            $attributeUpdate->product_price=$request->product_price[$key];
+            $attributeUpdate->quantity=$quantity;
+            $attributeUpdate->save();            
+        }
+
+        $notication=array(
+            'message'=>'Product Update Successfully',
+            'alert-type'=>'success',
+        );
+
+        return back()->with($notication);
     }
 
     /**
@@ -155,10 +232,54 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
-    {
-        //
+    public function destroy(Product $product){
+        $product->delete();
+        ProductGallery::where('product_id',$product->id)->delete();
+        ProductAttribute::where('product_id',$product->id)->delete();
+
+        $notication=array(
+            'message'=>'Product Moved To Trash',
+            'alert-type'=>'warning',
+        );
+
+        return back()->with($notication);
     }
+
+    // Product Trash
+
+    function productTrash(){
+        return view('Backend.Product.product-trash',[
+            'trashes'=>Product::onlyTrashed()->simplePaginate(),
+            'trasheCount'=>Product::onlyTrashed()->count(),
+        ]);
+    }
+
+    // Product Restore
+
+    function productRestore($id){
+        Product::onlyTrashed()->findOrFail($id)->restore();
+        ProductGallery::onlyTrashed()->where('product_id',$id)->restore();
+        ProductAttribute::onlyTrashed()->where('product_id',$id)->restore();
+           $notication=array(
+               'message'=>'Product Restore Successfully',
+               'alert-type'=>'success',
+           );
+           return back()->with($notication);
+    }
+    // Product Permanent Delete
+
+    function productPerDelete($id){
+        Product::onlyTrashed()->findOrFail($id)->forceDelete();
+        ProductAttribute::onlyTrashed()->where('product_id',$id)->forceDelete();
+        ProductGallery::onlyTrashed()->where('product_id',$id)->forceDelete();
+          $notication=array(
+            'message'=>'Product Deleted Permanently',
+            'alert-type'=>'error',
+          );
+          return back()->with($notication);        
+    }
+
+
 
     function getSubCategory($cat_id){
         $subCategory = subCategory::where('category_id',$cat_id)->get();

@@ -58,6 +58,9 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
   Route::get('/brand-permanent-delete/{id}',[BrandController::class,'brandPermanent'])->name('brandPermanent');
 //PRODUCT CONTROLLER STARTS
   Route::resource('/product',ProductController::class);
+  Route::get('/product-trash',[ProductController::class,'productTrash'])->name('productTrash');
+  Route::get('/product-restore/{id}',[ProductController::class,'productRestore'])->name('productRestore');
+  Route::get('/product-per-delete/{id}',[ProductController::class,'productPerDelete'])->name('productPerDelete');
 });
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
 // LARAVEL FILE MANAGER STARTS 

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
@@ -61,7 +63,19 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
   Route::get('/product-trash',[ProductController::class,'productTrash'])->name('productTrash');
   Route::get('/product-restore/{id}',[ProductController::class,'productRestore'])->name('productRestore');
   Route::get('/product-per-delete/{id}',[ProductController::class,'productPerDelete'])->name('productPerDelete');
+// BANNER CONTROLLER STARTS
+  Route::resource('/banner',BannerController::class);
+  Route::get('/banner-status/{id}',[BannerController::class,'bannerStatus'])->name('bannerStatus');
+  Route::get('/banner-trash',[BannerController::class,'bannerTrash'])->name('bannerTrash');
+  Route::get('/banner-restore/{id}',[BannerController::class,'bannerRestore'])->name('bannerRestore');
+  Route::get('/banner-per-delete/{id}',[BannerController::class,'bannerPerDelete'])->name('bannerPerDelete');
 });
+//FEATURED PRODUCT CONTROLLER STARTS
+Route::resource('/freatued-product',FeaturedProductController::class);
+
+
+
+
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
 // LARAVEL FILE MANAGER STARTS 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

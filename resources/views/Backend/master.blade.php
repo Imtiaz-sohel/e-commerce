@@ -78,7 +78,7 @@
               <span class="menu-item-label">Size List</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        {{-- Size List --}}
+        {{-- Brand List --}}
         <a href="{{ route('brand.index') }}" class="br-menu-link @yield('brand')">
             <div class="br-menu-item">
               <i class="fa fa-folder"></i>
@@ -98,6 +98,20 @@
             <li class="nav-item"><a href="{{ route('product.create') }}" class="nav-link @yield('addActive')">Product Add</a></li>
             <li class="nav-item"><a href="{{ route('productTrash') }}" class="nav-link @yield('trashActive')">Product Trash</a></li>
           </ul>
+        {{-- Banner  --}}
+        <a href="{{ route('banner.index') }}" class="br-menu-link @yield('banner')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Banner</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+        {{-- Banner  --}}
+        <a href="{{ route('freatued-product.index') }}" class="br-menu-link @yield('featured_product')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Featured Product</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->

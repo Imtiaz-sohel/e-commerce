@@ -33,23 +33,6 @@
             <span class="menu-item-label">Dashboard</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        <a href="card-dashboard.html" class="br-menu-link">
-          <div class="br-menu-item">
-            <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
-            <span class="menu-item-label">Cards &amp; Widgets</span>
-          </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
-        <a href="#" class="br-menu-link">
-          <div class="br-menu-item">
-            <i class="menu-item-icon ion-ios-redo-outline tx-24"></i>
-            <span class="menu-item-label">Navigation</span>
-            <i class="menu-item-arrow fa fa-angle-down"></i>
-          </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
-        <ul class="br-menu-sub nav flex-column">
-          <li class="nav-item"><a href="navigation.html" class="nav-link">Basic Nav</a></li>
-          <li class="nav-item"><a href="navigation-layouts.html" class="nav-link">Nav Layouts</a></li>
-        </ul>
         {{-- Category List --}}
         <a href="{{ route('category.index') }}" class="br-menu-link @yield('category')">
             <div class="br-menu-item">
@@ -105,11 +88,18 @@
               <span class="menu-item-label">Banner</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-        {{-- Banner  --}}
-        <a href="{{ route('freatued-product.index') }}" class="br-menu-link @yield('featured_product')">
+        {{-- Featured Product  --}}
+        <a href="{{ route('featuredProduct.index') }}" class="br-menu-link @yield('featuredProduct')">
             <div class="br-menu-item">
               <i class="fa fa-folder"></i>
               <span class="menu-item-label">Featured Product</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+        {{-- Featured Product  --}}
+        <a href="#" class="br-menu-link @yield('testimonial')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Testimonial</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
       </div><!-- br-sideleft-menu -->

@@ -9,6 +9,7 @@ use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
+use App\Models\FeaturedProduct;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,9 +70,12 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
   Route::get('/banner-trash',[BannerController::class,'bannerTrash'])->name('bannerTrash');
   Route::get('/banner-restore/{id}',[BannerController::class,'bannerRestore'])->name('bannerRestore');
   Route::get('/banner-per-delete/{id}',[BannerController::class,'bannerPerDelete'])->name('bannerPerDelete');
-});
+
 //FEATURED PRODUCT CONTROLLER STARTS
-Route::resource('/freatued-product',FeaturedProductController::class);
+  Route::resource('/featuredProduct',FeaturedProductController::class);
+  Route::get('/featured-product-restore/{id}',[FeaturedProductController::class,'featuredRestore'])->name('featuredRestore');
+  Route::get('/featured-per-delete/{id}',[FeaturedProductController::class,'featuredPerDelete'])->name('featuredPerDelete');
+});
 
 
 

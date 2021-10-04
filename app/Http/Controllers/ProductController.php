@@ -285,25 +285,4 @@ class ProductController extends Controller
         $subCategory = subCategory::where('category_id',$cat_id)->get();
         return response()->json($subCategory);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

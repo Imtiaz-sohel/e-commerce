@@ -96,10 +96,17 @@
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
         {{-- Featured Product  --}}
-        <a href="#" class="br-menu-link @yield('testimonial')">
+        <a href="{{ route('testimonial.index') }}" class="br-menu-link @yield('testimonial')">
             <div class="br-menu-item">
               <i class="fa fa-folder"></i>
               <span class="menu-item-label">Testimonial</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+        {{-- About Us  --}}
+        <a href="{{ route('about.index') }}" class="br-menu-link @yield('about')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">About Us</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
       </div><!-- br-sideleft-menu -->
@@ -734,7 +741,7 @@
             toastr.warning(" {{ Session::get('message') }} ");
             break;
 
-            case 'error':
+            case 'danger':
             toastr.error(" {{ Session::get('message') }} ");
             break; 
         }

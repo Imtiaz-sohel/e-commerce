@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -9,7 +10,9 @@ use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\TestimonialController;
 use App\Models\FeaturedProduct;
+use App\Models\Testimonial;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,9 +78,15 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
   Route::resource('/featuredProduct',FeaturedProductController::class);
   Route::get('/featured-product-restore/{id}',[FeaturedProductController::class,'featuredRestore'])->name('featuredRestore');
   Route::get('/featured-per-delete/{id}',[FeaturedProductController::class,'featuredPerDelete'])->name('featuredPerDelete');
+//TESTIMONIAL CONTROLLER STARTS
+   Route::resource('/testimonial',TestimonialController::class);
+   Route::get('/testimonial-restore/{id}',[TestimonialController::class,'testimonialRestore'])->name('testimonialRestore');
+   Route::get('/testimonial-permanent-delete/{id}',[TestimonialController::class,'testimonialPermanentDelete'])->name('testimonialPermanentDelete');
+// ABOUT US CONTROLLER STARTS
+   Route::resource('/about',AboutController::class);
+   Route::get('/about-restore/{id}',[AboutController::class,'aboutRestore'])->name('aboutRestore');
+   Route::get('/about-per-delete/{id}',[AboutController::class,'aboutPerDelete'])->name('aboutPerDelete');
 });
-
-
 
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);

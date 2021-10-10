@@ -99,6 +99,21 @@ Route::prefix('user')->group(function () {
 });
 // FRONTEND CONTROLLER STARTS
 Route::get('/',[FrontendController::class,'frontPage'])->name('frontPage');
+Route::get('/single-product/{slug}',[FrontendController::class,'singleProduct'])->name('singleProduct');
+Route::get('/about-us',[FrontendController::class,'aboutUs'])->name('aboutUs');
+Route::get('/shop-page',[FrontendController::class,'shopPage'])->name('shopPage');
+
+
+
+
+
+
+
+
+
+
+
+
 // Social Login github
 Route::get('login/github',[UserController::class,'redirectToGithubProvider'])->name('github');
 Route::get('login/github/callback',[UserController::class,'handleProviderGithubCallback']);

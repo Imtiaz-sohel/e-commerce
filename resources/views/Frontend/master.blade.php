@@ -61,7 +61,7 @@
                     <div class="col-md-6 col-12">
                         <ul class="d-flex header-contact">
                             <li><i class="fa fa-phone"></i> +01 123 456 789</li>
-                            <li><i class="fa fa-envelope"></i> youremail@gmail.com</li>
+                            <li><i class="fa fa-envelope"></i> tohoney@gmail.com</li>
                         </ul>
                     </div>
                     <div class="col-md-6 col-12">
@@ -71,8 +71,8 @@
                                 <ul class="dropdown_style">
                                     @auth
                                       <li><a href="#">Profile</a></li>
-                                      <li><a href="checkout.html">Checkout</a></li>
-                                      <li><a href="wishlist.html">wishlist</a></li>
+                                      <li><a href="#">Checkout</a></li>
+                                      <li><a href="#">wishlist</a></li>
                                     @else      
                                      <li><a href="{{ route('userRegister') }}">Register</a></li>
                                      <li><a href="{{ route('userLogin') }}">Login</a></li>
@@ -109,37 +109,13 @@
                     <div class="col-lg-7 d-none d-lg-block">
                         <nav class="mainmenu">
                             <ul class="d-flex">
-                                <li class="active"><a href="{{ route('frontPage') }}">Home</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li>
-                                    <a href="javascript:void(0);">Shop <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown_style">
-                                        <li><a href="shop.html">Shop Page</a></li>
-                                        <li><a href="single-product.html">Product Details</a></li>
-                                        <li><a href="cart.html">Shopping cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Pages <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown_style">
-                                        <li><a href="about.html">About Page</a></li>
-                                        <li><a href="single-product.html">Product Details</a></li>
-                                        <li><a href="cart.html">Shopping cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown_style">
-                                        <li><a href="blog.html">blog Page</a></li>
-                                        <li><a href="blog-details.html">blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li class="@yield('home')"><a href="{{ route('frontPage') }}">Home</a></li>
+                                <li class="@yield('about')"><a href="{{ route('aboutUs') }}">About</a></li>
+                                <li class="@yield('shop')"><a href="{{ route('shopPage') }}">Shop</a></li>
+                                <li class="@yield('cart')"><a href="#">Cart</a></li>
+                                <li class="@yield('wishlist')"><a href="#">Wishlist</a></li>
+                                <li class="@yield('contact')"><a href="#">Contact</a></li>
+                                <li class="@yield('blog')"><a href="#">Blog</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -239,36 +215,12 @@
                         <div class="col-12 d-block d-lg-none">
                             <ul class="metismenu">
                                 <li><a href="{{ route('frontPage') }}">Home</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li class="sidemenu-items">
-                                    <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Shop </a>
-                                    <ul aria-expanded="false">
-                                        <li><a href="shop.html">Shop Page</a></li>
-                                        <li><a href="single-product.html">Product Details</a></li>
-                                        <li><a href="cart.html">Shopping cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                    </ul>
-                                </li>
-                                <li class="sidemenu-items">
-                                    <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Pages </a>
-                                    <ul aria-expanded="false">
-                                      <li><a href="about.html">About Page</a></li>
-                                      <li><a href="single-product.html">Product Details</a></li>
-                                      <li><a href="cart.html">Shopping cart</a></li>
-                                      <li><a href="checkout.html">Checkout</a></li>
-                                      <li><a href="wishlist.html">Wishlist</a></li>
-                                      <li><a href="faq.html">FAQ</a></li>
-                                    </ul>
-                                </li>
-                                <li class="sidemenu-items">
-                                    <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Blog</a>
-                                    <ul aria-expanded="false">
-                                        <li><a href="blog.html">Blog</a></li>
-                                        <li><a href="blog-details.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{ route('aboutUs') }}">About</a></li>
+                                <li><a href="{{ route('shopPage') }}">Shop Page</a></li>
+                                <li><a href="cart.html">Shopping cart</a></li>
+                                <li><a href="wishlist.html">Wishlist</a></li>
                                 <li><a href="contact.html">Contact</a></li>
+                                <li><a href="contact.html">Blog</a></li>
                             </ul>
                         </div>
                     </div>

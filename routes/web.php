@@ -7,13 +7,15 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeaturedProductController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
-use App\Models\FeaturedProduct;
-use App\Models\Testimonial;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,15 +28,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 require __DIR__.'/auth.php';
 
 // DASHBOARD CONTROLLER STARTS
 Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
-  Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
+  Route::get('/dashboard',[DashboardController::class,'dashboardPage'])->name('dashboardPage');
 //CATEGORY CONTROLLER    
   Route::resource('/category',CategoryController::class);
   Route::get('/category-trash/{id}',[CategoryController::class,'categoryRestore'])->name('categoryRestore');
@@ -88,10 +86,26 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
    Route::get('/about-per-delete/{id}',[AboutController::class,'aboutPerDelete'])->name('aboutPerDelete');
 });
 
-
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
 // LARAVEL FILE MANAGER STARTS 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-
+// USERCONTROLLER STARTS
+Route::prefix('user')->group(function () {
+    Route::get('/register',[UserController::class,'userRegister'])->name('userRegister');
+    Route::get('/login',[UserController::class,'userLogin'])->name('userLogin');
+    Route::get('/Forget-password',[UserController::class,'ForgetPassword'])->name('ForgetPassword');
+});
+// FRONTEND CONTROLLER STARTS
+Route::get('/',[FrontendController::class,'frontPage'])->name('frontPage');
+// Social Login github
+Route::get('login/github',[UserController::class,'redirectToGithubProvider'])->name('github');
+Route::get('login/github/callback',[UserController::class,'handleProviderGithubCallback']);
+// Social Login google
+Route::get('login/google',[UserController::class,'redirectToGoogle'])->name('google');
+Route::get('login/google/callback',[UserController::class,'handleGoogleCallback']);
+// Take user same page after login
+Route::get('/redirects', function () {
+    return redirect(Redirect::intended()->getTargetUrl());
+});

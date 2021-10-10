@@ -1,12 +1,11 @@
 @extends('Backend.Form.master')
 @section('content')
 <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
-    <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal">[</span>Admin Login<span class="tx-normal">]</span></div>
+    <div class="signin-logo tx-center tx-28 tx-bold tx-inverse mg-b-30"><span class="tx-normal">[</span>Password Reset<span class="tx-normal">]</span></div>
     <form action="{{ route('password.update') }}" method="POST">
         @csrf
         <!-- Password Reset Token -->
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
-        <div class="tx-center mg-b-60">Password Reset</div>
         {{-- Email --}}
         <div class="form-group">
             <input type="email" name="email" id="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="Enter your email">

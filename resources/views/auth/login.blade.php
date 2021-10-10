@@ -1,9 +1,8 @@
 @extends('Backend.Form.master')
 @section('content')
   <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
-    <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal">[</span> Admin Login <span class="tx-normal">]</span></div>
+    <div class="signin-logo tx-center tx-28 tx-bold tx-inverse mg-b-30"><span class="tx-normal">[</span>Login <span class="tx-normal">]</span></div>
     <x-auth-validation-errors class="mb-4" :errors="$errors" />
-    <div class="tx-center mg-b-30">Admin Panel</div>
     <form action="{{ route('login') }}" method="post">
         @csrf
       {{-- Email --}}

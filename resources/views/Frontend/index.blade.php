@@ -69,46 +69,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="featured-active2 owl-carousel next-prev-style">
-                        <div class="featured-wrap">
-                            <div class="featured-img">
-                                <img src="assets/images/featured/6.jpg" alt="">
-                                <div class="featured-content">
-                                    <a href="shop.html">Pure Honey</a>
+                        @foreach($fProducts as $key => $fProduct)                            
+                            <div class="featured-wrap">
+                                <div class="featured-img">
+                                    <img src="{{ asset('Featured_Image/'.$fProduct->product_image) }}" alt="{{ $fProduct->product_title }}">
+                                    <div class="featured-content">
+                                        <a href="#">{{ $fProduct->product_title }}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="featured-wrap">
-                            <div class="featured-img">
-                                <img src="assets/images/featured/7.jpg" alt="">
-                                <div class="featured-content">
-                                    <a href="shop.html">Mustard Oil</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="featured-wrap">
-                            <div class="featured-img">
-                                <img src="assets/images/featured/8.jpg" alt="">
-                                <div class="featured-content">
-                                    <a href="shop.html">Olive Oil</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="featured-wrap">
-                            <div class="featured-img">
-                                <img src="assets/images/featured/6.jpg" alt="">
-                                <div class="featured-content">
-                                    <a href="shop.html">Pure Honey</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="featured-wrap">
-                            <div class="featured-img">
-                                <img src="assets/images/featured/8.jpg" alt="">
-                                <div class="featured-content">
-                                    <a href="shop.html">Olive Oil</a>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -282,7 +252,7 @@
                                 <ul>
                                     <li><a data-toggle="modal" data-target="#exampleModalCenter{{ $product->id }}" href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
                                     <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
+                                    <li><a href="{{ route('singleProduct',$product->slug) }}"><i class="fa fa-shopping-bag"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -356,36 +326,18 @@
             <div class="row">
                 <div class="col-md-10 offset-md-1 col-12">
                     <div class="testmonial-active owl-carousel">
+                        @foreach($testimonials as $key => $testimonial)                            
                         <div class="test-items test-items2">
                             <div class="test-content">
-                                <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical LatinContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin</p>
-                                <h2>Elizabeth Ayna</h2>
-                                <p>CEO of Woman Fedaration</p>
+                                <p>{{ $testimonial->message }}</p>
+                                <h2>{{ $testimonial->c_name }}</h2>
+                                <p>{{ $testimonial->c_position }}</p>
                             </div>
                             <div class="test-img2">
-                                <img src="assets/images/test/1.png" alt="">
+                                <img src="{{ asset('testimonial/'.$testimonial->c_image) }}" alt="">
                             </div>
                         </div>
-                        <div class="test-items test-items2">
-                            <div class="test-content">
-                                <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical LatinContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin</p>
-                                <h2>Elizabeth Ayna</h2>
-                                <p>CEO of Woman Fedaration</p>
-                            </div>
-                            <div class="test-img2">
-                                <img src="assets/images/test/1.png" alt="">
-                            </div>
-                        </div>
-                        <div class="test-items test-items2">
-                            <div class="test-content">
-                                <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical LatinContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin</p>
-                                <h2>Elizabeth Ayna</h2>
-                                <p>CEO of Woman Fedaration</p>
-                            </div>
-                            <div class="test-img2">
-                                <img src="assets/images/test/1.png" alt="">
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\About;
 use App\Models\Category;
+use App\Models\FeaturedProduct;
 use App\Models\Product;
 use App\Models\ProductGallery;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -13,6 +15,8 @@ class FrontendController extends Controller
     function frontPage(){
         return view('Frontend.index',[
             'products'=>Product::latest()->get(),
+            'fProducts'=>FeaturedProduct::latest()->get(),
+            'testimonials'=>Testimonial::latest()->get(),
         ]);
     }
 

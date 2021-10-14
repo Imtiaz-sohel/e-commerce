@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/metisMenu.min.css') }}">
     <!-- swiper.min.css -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/swiper.min.css') }}">
+    <!-- Toaster css -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
     <!-- style css -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/styles.css') }}">
     <!-- responsive css -->
@@ -77,7 +79,7 @@
                                      <li><a href="{{ route('userRegister') }}">Register</a></li>
                                      <li><a href="{{ route('userLogin') }}">Login</a></li>
                                     @endauth
-                                    <li><a href="cart.html">Cart</a></li>
+                                    <li><a href="{{ route('cartPage') }}">Cart</a></li>
                                     @auth                                        
                                     <li>
                                         <a href="{{ route('logout') }}"
@@ -101,8 +103,8 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-7 col-sm-6 col-6">
                         <div class="logo">
-                            <a href="index.html">
-                        <img src="assets/images/logo.png" alt="">
+                            <a href="{{ route('frontPage') }}">
+                        <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="logo">
                         </a>
                         </div>
                     </div>
@@ -112,9 +114,9 @@
                                 <li class="@yield('home')"><a href="{{ route('frontPage') }}">Home</a></li>
                                 <li class="@yield('about')"><a href="{{ route('aboutUs') }}">About</a></li>
                                 <li class="@yield('shop')"><a href="{{ route('shopPage') }}">Shop</a></li>
-                                <li class="@yield('cart')"><a href="#">Cart</a></li>
+                                <li class="@yield('cart')"><a href="{{ route('cartPage') }}">Cart</a></li>
                                 <li class="@yield('wishlist')"><a href="#">Wishlist</a></li>
-                                <li class="@yield('contact')"><a href="#">Contact</a></li>
+                                <li class="@yield('contact')"><a href="{{ route('contacPage') }}">Contact</a></li>
                                 <li class="@yield('blog')"><a href="#">Blog</a></li>
                             </ul>
                         </nav>
@@ -217,9 +219,9 @@
                                 <li><a href="{{ route('frontPage') }}">Home</a></li>
                                 <li><a href="{{ route('aboutUs') }}">About</a></li>
                                 <li><a href="{{ route('shopPage') }}">Shop Page</a></li>
-                                <li><a href="cart.html">Shopping cart</a></li>
+                                <li><a href="{{ route('cartPage') }}">Shopping cart</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ route('contacPage') }}">Contact</a></li>
                                 <li><a href="contact.html">Blog</a></li>
                             </ul>
                         </div>
@@ -244,7 +246,7 @@
                                     <li><a href="#">our story</a></li>
                                     <li><a href="#">feed shop</a></li>
                                     <li><a href="blog.html">how to eat blog</a></li>
-                                    <li><a href="contact.html">contact</a></li>
+                                    <li><a href="{{ route('contacPage') }}">contact</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -313,10 +315,36 @@
     <script src="{{ asset('frontend/assets/js/metisMenu.min.js') }}"></script>
     <!-- mailchimp.js -->
     <script src="{{ asset('frontend/assets/js/mailchimp.js') }}"></script>
+    <!-- toaster.js -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- jquery-ui.min.js -->
     <script src="{{ asset('frontend/assets/js/jquery-ui.min.js') }}"></script>
     <!-- main js -->
     <script src="{{ asset('frontend/assets/js/scripts.js') }}"></script>
+     <!-- toaster.js -->
+    <script>
+        @if(Session::has('message'))
+        var type = "{{ Session::get('alert-type','info') }}"
+        switch(type){
+            case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+
+            case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+
+            case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+
+            case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break; 
+        }
+        @endif 
+    </script>
+    @yield('footer_js')
 </body>
 
 

@@ -109,6 +109,19 @@
               <span class="menu-item-label">About Us</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+        {{-- Contact Us  --}}
+        {{-- Contact --}}
+        <a href="{{ route('contact') }}" class="br-menu-link @yield('contact')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Contact</span>
+              <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link @yield('listActive')">Contact</a></li>
+            <li class="nav-item"><a href="{{ route('contactTrash') }}" class="nav-link @yield('listActive')">Contact Trash</a></li>
+          </ul>
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->

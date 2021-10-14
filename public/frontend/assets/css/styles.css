@@ -835,32 +835,6 @@ header-area start
     overflow: hidden;
 }
 
-.slide-inner1 {
-    background: url(../images/slider/1.jpg);
-}
-
-.slide-inner2 {
-    background: url(../images/slider/5.jpg);
-}
-
-.slide-inner3 {
-    background: url(../images/slider/2.jpg);
-}
-
-.slide-inner4 {
-    background: url(../images/slider/2.jpg);
-}
-
-.slide-inner7 {
-    background: url(../images/slider/3.jpg);
-}
-
-.slide-inner8 {
-    background: url(../images/slider/4.jpg);
-}
-.slide-inner6 {
-    background: url(../images/slider/6.html);
-}
 .slide-inner{
     position: absolute;
     width: 100%;
@@ -3432,3 +3406,20 @@ ol {
     padding-bottom: 0;
 }
 /*mobal-subscribe*/
+/* My Css */
+
+.cart_button{
+    height: 35px;
+	line-height: 35px;
+	text-align: center;
+	width: 120px;
+	background: #ef4836;
+	color: #fff;
+	display: block;
+	margin-left: 30px;
+    border: none;
+}
+
+.cart_button:hover{
+    background: #333;
+}

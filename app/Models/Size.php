@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ProductAttribute;
+use App\Models\Cart;
 
 class Size extends Model
 {
@@ -22,5 +23,9 @@ class Size extends Model
 
     function productAttribute(){
         return $this->hasMany(ProductAttribute::class,'size_id');
+    }
+
+    function cart(){
+        return $this->hasMany(Cart::class,'size_id');
     }
 }

@@ -3,8 +3,10 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\FrontendController;
@@ -84,6 +86,12 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
    Route::resource('/about',AboutController::class);
    Route::get('/about-restore/{id}',[AboutController::class,'aboutRestore'])->name('aboutRestore');
    Route::get('/about-per-delete/{id}',[AboutController::class,'aboutPerDelete'])->name('aboutPerDelete');
+// CUSTOMER CONTACT TABLE STARTS
+   Route::get('/contact',[ContactController::class,'contact'])->name('contact');
+   Route::get('/contact-trash/{id}',[ContactController::class,'contactDelete'])->name('contactDelete');
+   Route::get('/contact-trash-list',[ContactController::class,'contactTrash'])->name('contactTrash');
+   Route::get('/contact-restore/{id}',[ContactController::class,'contactRestore'])->name('contactRestore');
+   Route::get('/contact-permanent-delete/{id}',[ContactController::class,'contactPerDelete'])->name('contactPerDelete');
 });
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
@@ -102,7 +110,14 @@ Route::get('/',[FrontendController::class,'frontPage'])->name('frontPage');
 Route::get('/single-product/{slug}',[FrontendController::class,'singleProduct'])->name('singleProduct');
 Route::get('/about-us',[FrontendController::class,'aboutUs'])->name('aboutUs');
 Route::get('/shop-page',[FrontendController::class,'shopPage'])->name('shopPage');
-
+Route::get('/get-product-size/{colorId}/{productId}',[FrontendController::class,'getProductSize']);
+// CONTACT CONTROLLER STARTS
+Route::get('/contact',[ContactController::class,'contacPage'])->name('contacPage');
+Route::post('/contact-post',[ContactController::class,'contactPost'])->name('contactPost');
+// CART CONTROLLER STARTS
+Route::post('/product-cart',[CartController::class,'productCart'])->name('productCart');
+Route::get('/cart',[CartController::class,'cartPage'])->name('cartPage');
+Route::get('/cart-remove/{id}',[CartController::class,'cartRemove'])->name('cartRemove');
 
 
 

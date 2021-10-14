@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ProductAttribute;
+use App\Models\Cart;
 
 class Color extends Model
 {
@@ -21,5 +22,8 @@ class Color extends Model
     }
     function productAttribute(){
         return $this->hasMany(ProductAttribute::class,'color_id');
+    }
+    function cart(){
+        return $this->hasMany(Cart::class,'color_id');
     }
 }

@@ -10,6 +10,7 @@ use App\Models\subCategory;
 use App\Models\Brand;
 use App\Models\ProductGallery;
 use App\Models\ProductAttribute;
+use App\Models\Cart;
 
 
 class Product extends Model
@@ -39,5 +40,8 @@ class Product extends Model
     }
     function productAttribute(){
         return $this->hasMany(ProductAttribute::class,'product_id');
+    }
+    function cart(){
+        return $this->hasMany(Cart::class,'product_id');
     }
 }

@@ -50,48 +50,77 @@
             </div>
             <div class="col-lg-6">
                 <div class="product-single-content">
-                    <h3>{{ $sProduct->product_title }}</h3>
-                    <div class="rating-wrap fix">
-                        <span class="pull-left">${{ $sProduct->price }}</span>
-                        <ul class="rating pull-right">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li>(05 Customar Review)</li>
+                    <form action="{{ route('productCart') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" id="product_id" value="{{ $sProduct->id }}">
+                        <h3>{{ $sProduct->product_title }}</h3>
+                        <div class="rating-wrap fix">
+                            <span class="pull-left price">${{ $sProduct->price }}</span>
+                            <ul class="rating pull-right">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li>(05 Customar Review)</li>
+                            </ul>
+                        </div>
+                        <p>{{ $sProduct->summary }}</p>
+                        <ul class="input-style">
+                            <li class="quantity cart-plus-minus">
+                                <input name="quantity" id="quantity" type="text" value="1" />
+                            </li>
+                            <li>
+                                <button class="cart_button" type="submit">Add To Cart</button>
+                            </li>
                         </ul>
-                    </div>
-                    <p>{{ $sProduct->summary }}</p>
-                    <ul class="input-style">
-                        <li class="quantity cart-plus-minus">
-                            <input type="text" value="1" />
-                        </li>
-                        <li><a href="cart.html">Add to Cart</a></li>
-                    </ul>
-                    <ul class="cetagory">
-                        <li>Categories:</li>
-                        {{ $sProduct->category->category_name }}
-                    </ul>
-                    <ul class="cetagory">
-                        <li>Color:</li>
-                        {{ $sProduct->category->category_name }}
-                    </ul>
-                    <ul class="cetagory">
-                        <li>Size:</li>
-                        {{ $sProduct->category->category_name }}
-                    </ul>
-                    <ul class="socil-icon">
-                        <li>Share :</li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                        <ul class="cetagory">
+                            <li>Categories:</li>
+                            {{ $sProduct->category->category_name }}
+                        </ul>
+                        <ul class="cetagory">
+                              <li>Color:</li>
+                              @foreach($groupByColors as $key => $groupByColor)
+                                <li>
+                                    <label for="color_id{{ $groupByColor[0]->id }}">{{ $groupByColor[0]->color->color_name }}</label>
+                                    <input data-product={{ $groupByColor[0]->product_id }} class="color" type="radio" name="color_id" id="color_id{{ $groupByColor[0]->id }}" value="{{ $groupByColor[0]->color_id }}" @error('color_id') is-invalid @enderror>
+                                </li>
+                              @endforeach
+                          @error('color_id')
+                              <div class="text-danger">
+                                  {{ $message }}
+                              </div>
+                          @enderror 
+                        </ul>
+                        <ul class="cetagory">
+                            <li>Size:</li>
+                            <li class="size_view" @error('size_id') is-invalid @enderror>
+                                {{--  --}}
+                            </li>
+                            @error('size_id')
+                                <div class="text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror 
+                        </ul>
+                        <ul class="cetagory">
+                            <li>Available Quantity:</li>
+                            <li class="qty">
+                                {{ $sProduct->productAttribute->sum('quantity') }}
+                            </li>
+                        </ul>
+                        <ul class="socil-icon">
+                            <li>Share :</li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                      </form>
+                  </div>
+              </div>
+          </div>
         <div class="row mt-60">
             <div class="col-12">
                 <div class="single-product-menu">
@@ -318,4 +347,27 @@
     </div>
 </div>
 <!-- featured-product-area end -->    
+@endsection
+@section('footer_js')
+<script>
+    $('.color').change(function(){
+       let colorId = $(this).val();
+       let productId = $(this).attr('data-product');
+       $.ajax({
+           type:"GET",
+           url:"{{ url('get-product-size') }}/"+colorId+'/'+productId,
+           success:function(res){
+               if (res) {
+                   $('.size_view').html(res);
+                   $('.size_check').change(function(){
+                       let productQuantity=$(this).attr('data-quantity');
+                       let productPrice=$(this).attr('data-price');
+                       $('.price').html('$'+productPrice);
+                       $('.qty').html(productQuantity);
+                   });
+               }
+           }
+       });
+    })
+</script>
 @endsection

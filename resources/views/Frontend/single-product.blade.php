@@ -69,6 +69,8 @@
                         <ul class="input-style">
                             <li class="quantity cart-plus-minus">
                                 <input name="quantity" id="quantity" type="text" value="1" />
+                                <div class="dec qtybutton">-</div>
+                                <div class="inc qtybutton">+</div>
                             </li>
                             <li>
                                 <button class="cart_button" type="submit">Add To Cart</button>
@@ -341,12 +343,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+             </div>
             @endforeach
         </div>
     </div>
 </div>
-<!-- featured-product-area end -->    
+<!-- featured-product-area end -->   
 @endsection
 @section('footer_js')
 <script>
@@ -370,4 +372,22 @@
        });
     })
 </script>
+{{-- Quantity Button --}}
+<script>
+    $(".qtybutton").on("click", function() {
+        var $button = $(this);
+        var oldValue = $button.parent().find("input").val();
+        if ($button.text() == "+") {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        $button.parent().find("input").val(newVal);
+    });    
+</script>    
 @endsection

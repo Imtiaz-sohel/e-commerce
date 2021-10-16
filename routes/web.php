@@ -118,7 +118,7 @@ Route::post('/contact-post',[ContactController::class,'contactPost'])->name('con
 Route::post('/product-cart',[CartController::class,'productCart'])->name('productCart');
 Route::get('/cart',[CartController::class,'cartPage'])->name('cartPage');
 Route::get('/cart-remove/{id}',[CartController::class,'cartRemove'])->name('cartRemove');
-
+Route::post('/cart-update-ajax',[CartController::class,'CartUpdateAjax'])->name('CartUpdateAjax');
 
 
 

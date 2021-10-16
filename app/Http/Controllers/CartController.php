@@ -65,6 +65,11 @@ class CartController extends Controller
         return back();
     }
 
+    function CartUpdateAjax(Request $request){
+        $cartUdate=Cart::findOrFail($request->id);
+        $cartUdate->quantity=$request->qty;
+        $cartUdate->save();
+    }
 
 
 

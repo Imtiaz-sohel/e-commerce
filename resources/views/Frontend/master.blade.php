@@ -319,8 +319,38 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- jquery-ui.min.js -->
     <script src="{{ asset('frontend/assets/js/jquery-ui.min.js') }}"></script>
+    <!-- Sweet Alert Js -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- main js -->
     <script src="{{ asset('frontend/assets/js/scripts.js') }}"></script>
+    <!-- Sweet Alert Js -->
+    <script>
+        $(function(){
+            // add #delete in anchore tag
+            $(document).on('click','#delete',function(e){
+                e.preventDefault();
+                var link =$(this).attr('href');
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "Remove These Product From Cart!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href=link
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                 }
+                });
+            });
+        });
+    </script>
      <!-- toaster.js -->
     <script>
         @if(Session::has('message'))

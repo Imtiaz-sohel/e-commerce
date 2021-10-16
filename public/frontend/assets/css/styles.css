@@ -3423,3 +3423,22 @@ ol {
 .cart_button:hover{
     background: #333;
 }
+
+.cupon-wrap span{
+    height: 44px;
+	line-height: 44px;
+	text-align: center;
+	width: 120px;
+	background: #ef4836;
+	color: #fff;
+	margin-left: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    transition: all linear .3s;
+}
+
+.cupon-wrap:hover span{
+    background: #333;  
+}

@@ -80,8 +80,18 @@
                             <h3>Cupon</h3>
                             <p>Enter Your Cupon Code if You Have One</p>
                             <div class="cupon-wrap">
-                                <input type="text" placeholder="Cupon Code">
-                                <button>Apply Cupon</button>
+                                <input class="coupon" type="text" placeholder="Cupon Code">
+                                <span class="coupon_check">Apply Cupon</span>
+                                @if($minOrder>$subtotal)
+                                    <div class="text-danger">
+                                        {{ "Order $".($minOrder-$subtotal)." More To Get The Discount" }}
+                                    </div>
+                                @endif
+                                @if(session('invalidCoupon'))
+                                   <div class="text-danger">
+                                      {{ session('invalidCoupon') }}    
+                                   </div> 
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -90,8 +100,22 @@
                             <h3>Cart Totals</h3>
                             <ul>
                                 <li><span class="pull-left">Subtotal </span><span>$</span><span class="sub_total_price">{{ $subtotal }}</span></li>
-                                <li><span class="pull-left">Disount </span>$0.00</li>
-                                <li><span class="pull-left"> Total </span> $380.00</li>
+                                @if($discountType==1)    
+                                 <li><span class="pull-left">Disount </span>
+                                     <span>{{ $discountAmount }}{{ "%" }}</span>
+                                 </li>
+                                @elseif ($discountType==2)
+                                <li><span class="pull-left">Disount </span>
+                                    <span>${{ $discountAmount }}</span>
+                                </li>
+                                @else
+                                <li><span class="pull-left">Total </span><span>$</span><span class="sub_total_price">{{ $subtotal }}</span></li> 
+                                @endif
+                                @if($discountType==1)
+                                  <li><span class="pull-left">Total </span><span>$</span><span class="sub_total_price">{{ $subtotal-($discountAmount/100)*$subtotal }}</span></li>
+                                @elseif($discountType==2)
+                                 <li><span class="pull-left">Total </span><span>$</span><span class="sub_total_price">{{ $subtotal-$discountAmount }}</span></li>                                      
+                                @endif
                             </ul>
                             <a href="checkout.html">Proceed to Checkout</a>
                         </div>
@@ -176,6 +200,12 @@ $('.qtyPlus{{ $cart->id }}').click(function(){
         }
     });
 });
-@endforeach    
+@endforeach
+
+$('.coupon_check').click(function(){
+   let coupon = $('.coupon').val();
+   window.location.href="{{ url('cart') }}/" +coupon;
+});
+
 </script>    
 @endsection

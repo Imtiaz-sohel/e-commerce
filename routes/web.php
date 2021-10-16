@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\FrontendController;
@@ -92,6 +93,9 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
    Route::get('/contact-trash-list',[ContactController::class,'contactTrash'])->name('contactTrash');
    Route::get('/contact-restore/{id}',[ContactController::class,'contactRestore'])->name('contactRestore');
    Route::get('/contact-permanent-delete/{id}',[ContactController::class,'contactPerDelete'])->name('contactPerDelete');
+// COUPON CONTROLLER STARTS
+   Route::resource('/coupon',CouponController::class);
+   Route::get('/coupon-status/{id}',[CouponController::class,'couponStatus'])->name('couponStatus');
 });
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
@@ -117,6 +121,7 @@ Route::post('/contact-post',[ContactController::class,'contactPost'])->name('con
 // CART CONTROLLER STARTS
 Route::post('/product-cart',[CartController::class,'productCart'])->name('productCart');
 Route::get('/cart',[CartController::class,'cartPage'])->name('cartPage');
+Route::get('/cart/{slug}',[CartController::class,'cartPage'])->name('cartCouponPage');
 Route::get('/cart-remove/{id}',[CartController::class,'cartRemove'])->name('cartRemove');
 Route::post('/cart-update-ajax',[CartController::class,'CartUpdateAjax'])->name('CartUpdateAjax');
 

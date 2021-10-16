@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
@@ -54,10 +56,50 @@ class CartController extends Controller
         }
     }
     
-    function cartPage(){
-        return view('Frontend.cart',[
-            'carts'=>Cart::with(['product','color','size'])->get(),
-        ]);
+    function cartPage($slug=""){
+        if ($slug=="") {
+            $minOrder=null;
+            $discountType=null;
+            $discountAmount=null;
+            $oldCookie_id=Cookie::get('cookie_id');
+            $carts=Cart::with(['product','color','size'])->where('cookie_id',$oldCookie_id)->get();
+            return view('Frontend.cart',[
+                'carts'=>$carts,
+                'minOrder'=>$minOrder,
+                'discountType'=>$discountType,
+                'discountAmount'=>$discountAmount,
+            ]);
+        }
+        else{
+            $couponCheck = Coupon::where('code',$slug);
+            if ($couponCheck->exists()) {
+                if (Coupon::where('code',$slug)->first()->ending_date>=Carbon::now()) {
+                    if (Coupon::where('code',$slug)->first()->status==1) {
+                        $coupon = Coupon::where('code',$slug)->first();
+                        $minOrder = $coupon->min_order;
+                        $discountType = $coupon->discount_type;
+                        $discountAmount = $coupon->discount_amount;
+                        $oldCookie_id=Cookie::get('cookie_id');
+                        $carts=Cart::with(['product','color','size'])->where('cookie_id',$oldCookie_id)->get();
+                        return view('Frontend.cart',[
+                            'carts'=>$carts,
+                            'minOrder'=>$minOrder,
+                            'discountType'=>$discountType,
+                            'discountAmount'=>$discountAmount,
+                        ]);    
+                    }
+                    else{
+                        return back()->with('invalidCoupon','These Coupon is Deactivated');
+                    }
+                }
+                else{
+                    return back()->with('invalidCoupon','Coupon Expired');
+                }
+            }
+            else{
+                return back()->with('invalidCoupon','Invalid Coupon');
+            }
+        }
     }
 
     function cartRemove($id){

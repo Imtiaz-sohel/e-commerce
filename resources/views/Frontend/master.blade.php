@@ -73,8 +73,7 @@
                                 <ul class="dropdown_style">
                                     @auth
                                       <li><a href="#">Profile</a></li>
-                                      <li><a href="#">Checkout</a></li>
-                                      <li><a href="#">wishlist</a></li>
+                                      <li><a href="{{ route('wishlist') }}">wishlist</a></li>
                                     @else      
                                      <li><a href="{{ route('userRegister') }}">Register</a></li>
                                      <li><a href="{{ route('userLogin') }}">Login</a></li>
@@ -115,7 +114,7 @@
                                 <li class="@yield('about')"><a href="{{ route('aboutUs') }}">About</a></li>
                                 <li class="@yield('shop')"><a href="{{ route('shopPage') }}">Shop</a></li>
                                 <li class="@yield('cart')"><a href="{{ route('cartPage') }}">Cart</a></li>
-                                <li class="@yield('wishlist')"><a href="#">Wishlist</a></li>
+                                <li class="@yield('wishlist')"><a href="{{ route('wishlist') }}">Wishlist</a></li>
                                 <li class="@yield('contact')"><a href="{{ route('contacPage') }}">Contact</a></li>
                                 <li class="@yield('blog')"><a href="#">Blog</a></li>
                             </ul>
@@ -220,7 +219,7 @@
                                 <li><a href="{{ route('aboutUs') }}">About</a></li>
                                 <li><a href="{{ route('shopPage') }}">Shop Page</a></li>
                                 <li><a href="{{ route('cartPage') }}">Shopping cart</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
+                                <li><a href="{{ route('wishlist') }}">Wishlist</a></li>
                                 <li><a href="{{ route('contacPage') }}">Contact</a></li>
                                 <li><a href="contact.html">Blog</a></li>
                             </ul>
@@ -323,34 +322,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- main js -->
     <script src="{{ asset('frontend/assets/js/scripts.js') }}"></script>
-    <!-- Sweet Alert Js -->
-    <script>
-        $(function(){
-            // add #delete in anchore tag
-            $(document).on('click','#delete',function(e){
-                e.preventDefault();
-                var link =$(this).attr('href');
-                Swal.fire({
-                title: 'Are you sure?',
-                text: "Remove These Product From Cart!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href=link
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
-                 }
-                });
-            });
-        });
-    </script>
      <!-- toaster.js -->
     <script>
         @if(Session::has('message'))

@@ -5,6 +5,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CouponController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -124,8 +127,12 @@ Route::get('/cart',[CartController::class,'cartPage'])->name('cartPage');
 Route::get('/cart/{slug}',[CartController::class,'cartPage'])->name('cartCouponPage');
 Route::get('/cart-remove/{id}',[CartController::class,'cartRemove'])->name('cartRemove');
 Route::post('/cart-update-ajax',[CartController::class,'CartUpdateAjax'])->name('CartUpdateAjax');
-
-
+// WISHLIST CONTROLLER STARTS
+Route::get('/wishlist',[WishlistController::class,'wishlist'])->name('wishlist');
+Route::get('/add-wishlist/{product_id}',[WishlistController::class,'addTowishlist'])->name('addTowishlist');
+Route::get('/wishlist-delete/{wishlist_id}',[WishlistController::class,'wishlistDelete'])->name('wishlistDelete');
+// CHECKOUT CONTROLLER STARTS
+Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('checkoutPage');
 
 
 

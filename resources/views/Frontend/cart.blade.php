@@ -117,7 +117,7 @@
                                  <li><span class="pull-left">Total </span><span>$</span><span class="sub_total_price">{{ $subtotal-$discountAmount }}</span></li>                                      
                                 @endif
                             </ul>
-                            <a href="checkout.html">Proceed to Checkout</a>
+                            <a href="{{ route('checkoutPage') }}">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div> 
@@ -207,5 +207,32 @@ $('.coupon_check').click(function(){
    window.location.href="{{ url('cart') }}/" +coupon;
 });
 
+</script>
+<script>
+    $(function(){
+        // add #delete in anchore tag
+        $(document).on('click','#delete',function(e){
+            e.preventDefault();
+            var link =$(this).attr('href');
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "Remove These Product From Cart!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href=link
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+             }
+            });
+        });
+    });
 </script>    
 @endsection

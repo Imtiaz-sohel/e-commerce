@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/swiper.min.css') }}">
     <!-- Toaster css -->
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+    @yield('header_css')
     <!-- style css -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/styles.css') }}">
     <!-- responsive css -->
@@ -124,75 +125,54 @@
                         <ul class="search-cart-wrapper d-flex">
                             <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>{{ wishCount() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
+                                    @foreach(wishlist() as $key => $wishlists) 
                                     <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="assets/images/cart/1.jpg" alt="">
+                                            <img width="70px" src="{{ asset('product/thumbnail/'.$wishlists->product->thumbnail) }}" alt="">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
+                                            <a href="{{ route('wishlist') }}">{{ $wishlists->product->product_title }}</a>
+                                            <p>${{ $wishlists->product->price }}</p>
+                                            <a href="{{ route('wishlistDelete',$wishlists->id) }}"><i class="fa fa-times"></i></a>
                                         </div>
                                     </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="assets/images/cart/3.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    @endforeach
                                     <li>
-                                        <button>Check Out</button>
+                                        <a href="{{ route('wishlist') }}">Check Out</a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>3</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>{{ cartCount() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
+                                    @php
+                                        $subtotal=0;
+                                    @endphp
+                                    @foreach(cart() as $key => $carts)                                   
                                     <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="assets/images/cart/1.jpg" alt="">
+                                            <img width="70px" src="{{ asset('product/thumbnail/'.$carts->product->thumbnail) }}" alt="">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
+                                            <a href="{{ route('singleProduct',$carts->product->slug) }}">{{ $carts->product->product_title }}</a>
+                                            <span>QTY : {{ $carts->quantity }}</span>
+                                            @php
+                                                $attribute=App\Models\ProductAttribute::where('product_id',$carts->product_id)->where('color_id',$carts->color_id)->where('size_id',$carts->size_id)->first();
+                                                 $total=$attribute->product_price*$carts->quantity;
+                                            @endphp
+                                            <p>${{ $total }}</p>
+                                            <a href="{{ route('cartRemove',$carts->id) }}"><i class="fa fa-times"></i></a>
                                         </div>
                                     </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="assets/images/cart/3.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="assets/images/cart/2.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    @php
+                                        $subtotal+=$total;
+                                    @endphp
+                                    @endforeach
+                                    <li>Subtotol: <span class="pull-right">${{ $subtotal }}</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <a href="{{ route('cartPage') }}" class="cart">Check Out</a>
                                     </li>
                                 </ul>
                             </li>

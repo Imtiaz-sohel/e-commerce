@@ -81,6 +81,7 @@ class CartController extends Controller
                         $discountAmount = $coupon->discount_amount;
                         $oldCookie_id=Cookie::get('cookie_id');
                         $carts=Cart::with(['product','color','size'])->where('cookie_id',$oldCookie_id)->get();
+                        session(['coupon'=>$slug]);
                         return view('Frontend.cart',[
                             'carts'=>$carts,
                             'minOrder'=>$minOrder,

@@ -12,6 +12,7 @@
     })
     // toggle
     $('#toggle2').on("click", function() {
+        $('#toggle2').val(2);
         $('#open2').slideToggle();
     })
 

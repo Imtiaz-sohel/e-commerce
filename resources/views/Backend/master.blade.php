@@ -16,7 +16,6 @@
     <link href="{{ asset('assets/backend/lib/rickshaw/rickshaw.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/lib/chartist/chartist.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
-
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('assets/backend/css/bracket.css') }}">
   </head>

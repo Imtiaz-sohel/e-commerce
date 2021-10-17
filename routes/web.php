@@ -133,6 +133,10 @@ Route::get('/add-wishlist/{product_id}',[WishlistController::class,'addTowishlis
 Route::get('/wishlist-delete/{wishlist_id}',[WishlistController::class,'wishlistDelete'])->name('wishlistDelete');
 // CHECKOUT CONTROLLER STARTS
 Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('checkoutPage');
+Route::get('/api/get-state-list/{country_id}',[CheckoutController::class,'getStateList']);
+Route::get('/api/get-city-list/{state_id}',[CheckoutController::class,'getCityList']);
+Route::post('/checkout-post',[CheckoutController::class,'checkoutPost'])->name('checkoutPost');
+Route::get('/order-product/{billing_id}',[CheckoutController::class,'orderConfimed'])->name('orderConfirmed');
 
 
 

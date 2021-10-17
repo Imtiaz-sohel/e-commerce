@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ProductAttribute;
 use App\Models\Cart;
+use App\Models\Order;
 
 class Size extends Model
 {
@@ -27,5 +28,8 @@ class Size extends Model
 
     function cart(){
         return $this->hasMany(Cart::class,'size_id');
+    }
+    function order(){
+        return $this->hasMany(Order::class,'size_id');
     }
 }

@@ -125,16 +125,12 @@ class CheckoutController extends Controller{
             $attributeQuantity->decrement('quantity',$order->quantity);
             $attributeQuantity->save();
         }
-
-        $afterPay = Billing::findOrFail($billing->id);
-        $afterPay->payment_status=2;
-        $afterPay->total_amount=$payAmount;
-        $afterPay->discount=$discount;
-        $afterPay->save();
-        return redirect()->route('orderConfirmed',$billing->id);
-
-        
-        
+            $afterPay = Billing::findOrFail($billing->id);
+            $afterPay->payment_status=2;
+            $afterPay->total_amount=$payAmount;
+            $afterPay->discount=$discount;
+            $afterPay->save();
+            return redirect()->route('orderConfirmed',$billing->id);
        }
        elseif($request->pay_type=="card"){
            return "Card";
@@ -149,7 +145,7 @@ class CheckoutController extends Controller{
 
     function orderConfimed($billing_id){
         return view('Frontend.order',[
-            'orders'=>Order::where('billing_id',$billing_id)->get(),
+            'orders'=>Order::with('billing')->where('billing_id',$billing_id)->get(),
         ]);
     }
 

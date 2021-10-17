@@ -2,15 +2,15 @@
 @section('ftitle')
     {{ "Order" }}
 @endsection
-{{-- @php
+@php
     Session::forget('coupon') 
-@endphp --}}
+@endphp
 @section('content')
 <div class="container">
     <div class="row mt-5">
         <div class="col-12 text-center">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ Auth::user()->name }} Thanks For Shopping With Us ..</strong>
+                <strong>{{ $orders[0]->billing->full_name }} Thanks For Shopping With Us ..</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -27,11 +27,11 @@
                             <tbody>
                                 <tr>
                                     <td>Order Date</td>
-                                    <td>01-May-2001</td>
+                                    <td>{{ $orders[0]->created_at->format('Y-m-d') }}</td>
                                 </tr>
                                 <tr>
                                     <td>Payment Method</td>
-                                    <td>Card</td>
+                                    <td>{{ $orders[0]->billing->pay_type }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -48,15 +48,15 @@
                             <tbody>
                                 <tr>
                                     <td>Customer Name</td>
-                                    <td>Full Name</td>
+                                    <td>{{ $orders[0]->billing->full_name }}</td>
                                 </tr>
                                 <tr>
                                     <td>Customer Email</td>
-                                    <td>Email</td>
+                                    <td>{{ $orders[0]->billing->email }}</td>
                                 </tr>
                                 <tr>
                                     <td>Customer Phone</td>
-                                    <td>Phone</td>
+                                    <td>{{ $orders[0]->billing->phone }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -73,6 +73,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Product</th>
                                 <th>Color</th>
                                 <th>Size</th>
@@ -82,19 +83,23 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($orders as $key => $order)                                
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><img width="100px" src="{{ asset('product/thumbnail/'.$order->product->thumbnail) }}" alt=""></td>
+                                <td>{{ $order->product->product_title }}</td>
+                                <td>{{ $order->color->color_name }}</td>
+                                <td>{{ $order->size->size_name }}</td>
+                                <td>{{ $order->product_price }}</td>
+                                <td>{{ $order->quantity }}</td>
+                                <td>${{ $order->quantity*$order->product_price }}</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="back_home text-center">
+                <a href="{{ route('frontPage') }}">Back To Home</a>
             </div>
         </div>
     </div>

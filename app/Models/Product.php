@@ -12,6 +12,7 @@ use App\Models\ProductGallery;
 use App\Models\ProductAttribute;
 use App\Models\Cart;
 use App\Models\Wishlist;
+use App\Models\Order;
 
 
 class Product extends Model
@@ -47,5 +48,8 @@ class Product extends Model
     }
     function wishlist(){
         return $this->hasMany(Wishlist::class,'product_id');
+    }
+    function order(){
+        return $this->hasMany(Order::class,'product_id');
     }
 }

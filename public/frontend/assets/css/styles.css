@@ -3464,3 +3464,17 @@ ol {
 	right: 1px;
 	width: 20px;
 }
+
+.back_home a{
+    padding: 10px;
+	background: #ef4836;
+	border: 1px solid #ef4836;
+	color: #fff;
+}
+
+.back_home a:hover{
+    background: #fff;
+    color: #333;
+}
+
+

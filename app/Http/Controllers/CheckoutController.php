@@ -33,7 +33,6 @@ class CheckoutController extends Controller{
         ]);
     }
 
-
     function getStateList($country_id){
         $states = State::where('country_id',$country_id)->get();
         return response()->json($states);
@@ -420,49 +419,4 @@ class CheckoutController extends Controller{
             'orders'=>Order::with('billing')->where('billing_id',$billing_id)->get(),
         ]);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

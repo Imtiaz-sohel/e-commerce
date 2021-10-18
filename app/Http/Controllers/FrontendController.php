@@ -6,20 +6,23 @@ use App\Models\About;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\FeaturedProduct;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductGallery;
 use App\Models\Testimonial;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
     function frontPage(){
+        $bestSellings = Order::with(['product'])->select('product_id', DB::raw('count(*) as total'))->groupBy('product_id')->orderBy('total', 'DESC')->limit(4)->get();
         return view('Frontend.index',[
             'products'=>Product::latest()->get(),
             'fProducts'=>FeaturedProduct::latest()->get(),
             'testimonials'=>Testimonial::latest()->get(),
             'banners'=>Banner::latest()->get(),
+            'bestSellings'=>$bestSellings,
         ]);
     }
 

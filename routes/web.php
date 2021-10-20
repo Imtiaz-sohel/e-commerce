@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -100,6 +101,10 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
 // COUPON CONTROLLER STARTS
    Route::resource('/coupon',CouponController::class);
    Route::get('/coupon-status/{id}',[CouponController::class,'couponStatus'])->name('couponStatus');
+// BILL CONTROLLER STARTS
+   Route::get('/all-bill',[BillController::class,'allBill'])->name('allBill');   
+   Route::get('/all-order-by-bill/{billing_id}',[BillController::class,'orderByBill'])->name('orderByBill');   
+   Route::get('/shipping/{billing_id}',[BillController::class,'shipping'])->name('shipping');   
 });
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);

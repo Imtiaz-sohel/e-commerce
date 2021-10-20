@@ -127,6 +127,13 @@
               <span class="menu-item-label">Coupon</span>
             </div><!-- menu-item -->
           </a><!-- br-menu-link -->
+          {{-- Bill --}}
+          <a href="{{ route('allBill') }}" class="br-menu-link @yield('bill')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Bill</span>
+            </div><!-- menu-item -->
+          </a><!-- br-menu-link -->
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->

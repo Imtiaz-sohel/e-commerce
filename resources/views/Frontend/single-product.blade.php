@@ -2,6 +2,27 @@
 @section('ftitle')
     {{ $sProduct->product_title }}
 @endsection
+@section('header_css')
+<style>
+    .star-ratings-sprite {
+      background: url("//s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+      font-size: 0;
+      height: 21px;
+      line-height: 0;
+      overflow: hidden;
+      text-indent: -999em;
+      width: 110px;
+      margin: 0 auto;
+    }
+    .star-ratings-sprite-rating {
+      background: url("//s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+      background-position: 0 100%;
+      float: left;
+      height: 21px;
+      display: block;
+    }
+</style>    
+@endsection
 @section('content')
 <!-- .breadcumb-area start -->
 <div class="breadcumb-area bg-img-4 ptb-100">
@@ -53,17 +74,12 @@
                     <form action="{{ route('productCart') }}" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" id="product_id" value="{{ $sProduct->id }}">
-                        <h3>{{ $sProduct->product_title }}</h3>
+                        <h3>{{ $sProduct->product_title }} <span style="font-weight: 400; font-size:15px;">({{ $allReviews->count() }} Customer Review)</span> </h3>
                         <div class="rating-wrap fix">
                             <span class="pull-left price">${{ $sProduct->price }}</span>
-                            <ul class="rating pull-right">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li>(05 Customar Review)</li>
-                            </ul>
+                            <div class="star-ratings-sprite rating">
+                                <span style="width:@if($allReviews->count()>0) {{ $allReviews->sum('ratting')/$allReviews->count()*20 }}% @endif" class="star-ratings-sprite-rating"></span>
+                            </div>
                         </div>
                         <p>{{ $sProduct->summary }}</p>
                         <ul class="input-style">
@@ -197,112 +213,100 @@
                     <div class="tab-pane" id="review">
                         <div class="review-wrap">
                             <ul>
+                                @foreach($allReviews as $key => $allReview)                                    
                                 <li class="review-items">
-                                    <div class="review-img">
-                                        <img src="assets/images/comment/1.png" alt="">
-                                    </div>
                                     <div class="review-content">
-                                        <h3><a href="#">GERALD BARNES</a></h3>
-                                        <span>27 Jun, 2019 at 2:30pm</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                        <ul class="rating">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
+                                        <h3>{{ $allReview->name }}</h3>
+                                        <span>{{ $allReview->created_at->format('d M,Y') }}</span>
+                                        <p>{{ $allReview->message }}</p>
+                                        <div class="star-ratings-sprite rating">
+                                            <span style="width:{{ $allReview->ratting*20 }}%" class="star-ratings-sprite-rating"></span>
+                                        </div>
                                     </div>
                                 </li>
-                                <li class="review-items">
-                                    <div class="review-img">
-                                        <img src="assets/images/comment/2.png" alt="">
-                                    </div>
-                                    <div class="review-content">
-                                        <h3><a href="#">Olive Oil</a></h3>
-                                        <span>15 may, 2019 at 2:30pm</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                        <ul class="rating">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star-half-o"></i></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="review-items">
-                                    <div class="review-img">
-                                        <img src="assets/images/comment/3.png" alt="">
-                                    </div>
-                                    <div class="review-content">
-                                        <h3><a href="#">Nature Honey</a></h3>
-                                        <span>14 janu, 2019 at 2:30pm</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                        <ul class="rating">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star-o"></i></li>
-                                        </ul>
-                                    </div>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
+                        @php
+                            $order=App\Models\Order::where('product_id',$sProduct->id)->where('user_id',Auth::id())->count();
+                        @endphp
                         <div class="add-review">
                             <h4>Add A Review</h4>
-                            <div class="ratting-wrap">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>task</th>
-                                            <th>1 Star</th>
-                                            <th>2 Star</th>
-                                            <th>3 Star</th>
-                                            <th>4 Star</th>
-                                            <th>5 Star</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>How Many Stars?</td>
-                                            <td>
-                                                <input type="radio" name="a" />
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a" />
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a" />
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a" />
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <h4>Name:</h4>
-                                    <input type="text" placeholder="Your name here..." />
+                            @auth
+                              @if($review>0)
+                                 <h6>Already Reviewed</h6>
+                              @else
+                              @if($order>0)
+                              <form action="{{ route('ReviewPost') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" id="product_id" value="{{ $sProduct->id }}">
+                                <div class="ratting-wrap">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>task</th>
+                                                <th>1 Star</th>
+                                                <th>2 Star</th>
+                                                <th>3 Star</th>
+                                                <th>4 Star</th>
+                                                <th>5 Star</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>How Many Stars?</td>
+                                                @error('ratting')
+                                                    <div class="text-danger">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                <td>
+                                                    <input type="radio" value="1" name="ratting" />
+                                                </td>
+                                                <td>
+                                                    <input type="radio" value="2" name="ratting" />
+                                                </td>
+                                                <td>
+                                                    <input type="radio" value="3" name="ratting" />
+                                                </td>
+                                                <td>
+                                                    <input type="radio" value="4" name="ratting" />
+                                                </td>
+                                                <td>
+                                                    <input type="radio" value="5" name="ratting" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="col-md-6 col-12">
-                                    <h4>Email:</h4>
-                                    <input type="email" placeholder="Your Email here..." />
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <h4>Name:</h4>
+                                        <input type="text" name="name" value="{{ Auth::user()->name }}" placeholder="Your name here..." />
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <h4>Email:</h4>
+                                        <input type="email" name="email" value="{{ Auth::user()->email }}" placeholder="Your Email here..." />
+                                    </div>
+                                    <div class="col-12">
+                                        <h4>Your Review:</h4>
+                                        <textarea name="message" id="massage" cols="30" rows="10" placeholder="Your review here..." @error('message') is-invalid @enderror></textarea>
+                                        @error('message')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn-style">Submit</button>
+                                    </div>
                                 </div>
-                                <div class="col-12">
-                                    <h4>Your Review:</h4>
-                                    <textarea name="massage" id="massage" cols="30" rows="10" placeholder="Your review here..."></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn-style">Submit</button>
-                                </div>
-                            </div>
+                              </form>  
+                              @endif 
+                              @endif
+                            @else
+                             <h6>Please Login To Review</h6>    
+                            @endauth
                         </div>
                     </div>
                 </div>

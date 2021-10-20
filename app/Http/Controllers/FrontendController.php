@@ -10,15 +10,17 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductGallery;
+use App\Models\Review;
 use App\Models\Testimonial;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
     function frontPage(){
-        $bestSellings = Order::with(['product'])->select('product_id', DB::raw('count(*) as total'))->groupBy('product_id')->orderBy('total', 'DESC')->limit(4)->get();
+        $bestSellings = Order::with(['product','product.review'])->select('product_id', DB::raw('count(*) as total'))->groupBy('product_id')->orderBy('total', 'DESC')->limit(4)->get();
         return view('Frontend.index',[
-            'products'=>Product::latest()->get(),
+            'products'=>Product::with(['review'])->latest()->get(),
             'fProducts'=>FeaturedProduct::latest()->get(),
             'testimonials'=>Testimonial::latest()->get(),
             'banners'=>Banner::latest()->get(),
@@ -32,11 +34,17 @@ class FrontendController extends Controller
         $attribute = ProductAttribute::where('product_id',$sProduct->id)->get();
         $collect = collect($attribute);
         $groupByColors = $collect->groupBy('color_id');
+        // review
+        $review = Review::where('product_id',$sProduct->id)->where('user_id',Auth::id())->count();
+        $allReviews = Review::where('product_id',$sProduct->id)->get();
+        // $avgRatting=$allReviews->sum('ratting')/$allReviews->count()*20;
         return view('Frontend.single-product',[
             'sProduct'=>$sProduct,
             'rProducts'=>$rProducts,
             'pGalleries'=>ProductGallery::where('product_id',$sProduct->id)->get(),
             'groupByColors'=>$groupByColors,
+            'review'=>$review,
+            'allReviews'=>$allReviews,
         ]);
     }
 

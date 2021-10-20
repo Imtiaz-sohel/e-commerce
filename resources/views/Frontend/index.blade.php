@@ -2,6 +2,27 @@
 @section('home')
     active
 @endsection
+@section('header_css')
+<style>
+    .star-ratings-sprite {
+      background: url("//s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+      font-size: 0;
+      height: 21px;
+      line-height: 0;
+      overflow: hidden;
+      text-indent: -999em;
+      width: 110px;
+      margin: 0 auto;
+    }
+    .star-ratings-sprite-rating {
+      background: url("//s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+      background-position: 0 100%;
+      float: left;
+      height: 21px;
+      display: block;
+    }
+</style>    
+@endsection
 @section('content')
     <!-- slider-area start -->
     <div class="slider-area">
@@ -103,11 +124,9 @@
                             <h3><a href="{{ route('singleProduct',$bestSelling->product->slug) }}">{{ $bestSelling->product->product_title }}</a></h3>
                             <p class="pull-left">${{ $bestSelling->product->price }}</p>
                             <ul class="pull-right d-flex">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star-half-o"></i></li>
+                                <div class="star-ratings-sprite rating">
+                                    <span style="width:@if($bestSelling->product->review->count()>0){{ $bestSelling->product->review->sum('ratting')/$bestSelling->product->review->count()*20 }}% @endif" class="star-ratings-sprite-rating"></span>
+                                </div>
                             </ul>
                         </div>
                     </div>
@@ -186,11 +205,9 @@
                             <h3><a href="{{ route('singleProduct',$product->slug) }}">{{ $product->product_title }}</a></h3>
                             <p class="pull-left">${{ $product->price }}</p>
                             <ul class="pull-right d-flex">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star-half-o"></i></li>
+                                <div class="star-ratings-sprite rating">
+                                    <span style="width:@if($product->review->count()>0){{ $product->review->sum('ratting')/$product->review->count()*20 }}% @endif" class="star-ratings-sprite-rating"></span>
+                                </div>
                             </ul>
                         </div>
                     </div>

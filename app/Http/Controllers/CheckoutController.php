@@ -118,6 +118,7 @@ class CheckoutController extends Controller{
           foreach ($carts as $key => $cart) {
               $unitPrice=ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->product_price; 
               $order = new Order;
+              $order->user_id=Auth::id();
               $order->billing_id=$billing->id;
               $order->product_id=$cart->product_id;
               $order->color_id=$cart->color_id;
@@ -237,6 +238,7 @@ class CheckoutController extends Controller{
     foreach ($carts as $key => $cart) {
         $unitPrice = ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->product_price;
         $order = new Order;
+        $order->user_id=Auth::id();
         $order->billing_id=$billing->id;
         $order->product_id=$cart->product_id;
         $order->color_id=$cart->color_id;
@@ -365,6 +367,7 @@ class CheckoutController extends Controller{
             foreach ($carts as $key => $cart) {
                 $unitPrice=ProductAttribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->product_price;
                 $order = new Order;
+                $order->user_id=Auth::id();
                 $order->billing_id=$billing->id;
                 $order->product_id=$cart->product_id;
                 $order->color_id=$cart->color_id;

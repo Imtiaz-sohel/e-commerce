@@ -13,6 +13,7 @@ use App\Models\ProductAttribute;
 use App\Models\Cart;
 use App\Models\Wishlist;
 use App\Models\Order;
+use App\Models\Review;
 
 
 class Product extends Model
@@ -51,5 +52,8 @@ class Product extends Model
     }
     function order(){
         return $this->hasMany(Order::class,'product_id');
+    }
+    function review(){
+        return $this->hasMany(Review::class,'product_id');
     }
 }

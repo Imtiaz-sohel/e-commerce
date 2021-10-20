@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
@@ -137,7 +138,8 @@ Route::get('/api/get-state-list/{country_id}',[CheckoutController::class,'getSta
 Route::get('/api/get-city-list/{state_id}',[CheckoutController::class,'getCityList']);
 Route::post('/checkout-post',[CheckoutController::class,'checkoutPost'])->name('checkoutPost');
 Route::get('/order-product/{billing_id}',[CheckoutController::class,'orderConfimed'])->name('orderConfirmed');
-
+// REVIEW CONTROLLE STARTS
+Route::post('/review-post',[ReviewController::class,'ReviewPost'])->name('ReviewPost');
 
 
 

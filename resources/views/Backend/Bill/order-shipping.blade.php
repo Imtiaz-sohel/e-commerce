@@ -24,7 +24,6 @@
                          <span>{{ $shipping->s_address }}</span>
                         </p>
                         <p>{{ $shipping->s_phone }}</p>
-                    
                   </div>
             </div>
         </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProductController;
@@ -105,6 +106,10 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
    Route::get('/all-bill',[BillController::class,'allBill'])->name('allBill');   
    Route::get('/all-order-by-bill/{billing_id}',[BillController::class,'orderByBill'])->name('orderByBill');   
    Route::get('/shipping/{billing_id}',[BillController::class,'shipping'])->name('shipping');   
+   Route::get('/bill-search',[BillController::class,'billSearch'])->name('billSearch');   
+   Route::get('/bill-download',[BillController::class,'billDownload'])->name('billDownload');
+//FAQ CONTROLLER STARTS
+       
 });
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
@@ -145,12 +150,6 @@ Route::post('/checkout-post',[CheckoutController::class,'checkoutPost'])->name('
 Route::get('/order-product/{billing_id}',[CheckoutController::class,'orderConfimed'])->name('orderConfirmed');
 // REVIEW CONTROLLE STARTS
 Route::post('/review-post',[ReviewController::class,'ReviewPost'])->name('ReviewPost');
-
-
-
-
-
-
 
 // Social Login github
 Route::get('login/github',[UserController::class,'redirectToGithubProvider'])->name('github');

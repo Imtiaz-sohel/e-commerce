@@ -18,7 +18,7 @@ function wishlist(){
 }
 
 function wishCount(){
-    return Wishlist::count();
+    return Wishlist::where('user_id',Auth::id())->count();
 }
 
 ?>

@@ -147,12 +147,10 @@
                                     <div class="rating-wrap fix">
                                         <span class="pull-left">${{ $bestSelling->product->price }}</span>
                                         <ul class="rating pull-right">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li>(05 Customar Review)</li>
+                                            <div class="star-ratings-sprite rating">
+                                                <span style="width:@if($bestSelling->product->review->count()>0) {{ $bestSelling->product->review->sum('ratting')/$bestSelling->product->review->count()*20 }}% @endif" class="star-ratings-sprite-rating"></span>
+                                              </div>
+                                            <li>({{ $bestSelling->product->review->count() }} Customer Reviewed)</li>
                                         </ul>
                                     </div>
                                     <p>{{ $bestSelling->product->summary }}</p>
@@ -228,18 +226,16 @@
                                     <div class="rating-wrap fix">
                                         <span class="pull-left">${{ $product->price }}</span>
                                         <ul class="rating pull-right">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li>(05 Customar Review)</li>
+                                            <div class="star-ratings-sprite rating">
+                                                <span style="width: @if($product->review->count()>0) {{ $product->review->sum('ratting')/$product->review->count()*20 }}% @endif" class="star-ratings-sprite-rating"></span>
+                                            </div>
+                                            <li>({{ $product->review->sum('ratting') }} Customar Review)</li>
                                         </ul>
                                     </div>
                                     <p>{{ $product->summary }}</p>
                                     <ul class="socil-icon">
                                         <li>Share :</li>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="https://www.facebook.com/sharer/sharer.php/{{ $product->slug }}"><i class="fa fa-facebook"></i></a></li>
                                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                         <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                         <li><a href="#"><i class="fa fa-instagram"></i></a></li>
@@ -257,7 +253,7 @@
     </div>
     <!-- product-area end -->
     <!-- testmonial-area start -->
-    <div class="testmonial-area testmonial-area2 bg-img-2 black-opacity">
+    <div class="testmonial-area testmonial-area2 bg-img-2 black-opacity" style="margin-bottom: -48px">
         <div class="container">
             <div class="row">
                 <div class="col-12">

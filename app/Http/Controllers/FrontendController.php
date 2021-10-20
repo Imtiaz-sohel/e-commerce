@@ -49,8 +49,10 @@ class FrontendController extends Controller
     }
 
     function aboutUs(){
+        $bestSellings = Order::with(['product','product.review','product.category'])->select('product_id', DB::raw('count(*) as total'))->groupBy('product_id')->orderBy('total', 'DESC')->limit(4)->get();
         return view('Frontend.about-us',[
             'aboutUs'=>About::latest()->first(),
+            'bestSellings'=>$bestSellings
         ]);
     }
 

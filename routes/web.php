@@ -21,6 +21,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Models\Faq;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -109,7 +110,7 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
    Route::get('/bill-search',[BillController::class,'billSearch'])->name('billSearch');   
    Route::get('/bill-download',[BillController::class,'billDownload'])->name('billDownload');
 //FAQ CONTROLLER STARTS
-       
+   Route::resource('/faq',FaqController::class);      
 });
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
@@ -150,7 +151,8 @@ Route::post('/checkout-post',[CheckoutController::class,'checkoutPost'])->name('
 Route::get('/order-product/{billing_id}',[CheckoutController::class,'orderConfimed'])->name('orderConfirmed');
 // REVIEW CONTROLLE STARTS
 Route::post('/review-post',[ReviewController::class,'ReviewPost'])->name('ReviewPost');
-
+// faq
+Route::get('/faq',[ReviewController::class,'faq'])->name('faq');
 // Social Login github
 Route::get('login/github',[UserController::class,'redirectToGithubProvider'])->name('github');
 Route::get('login/github/callback',[UserController::class,'handleProviderGithubCallback']);

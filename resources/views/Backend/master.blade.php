@@ -134,6 +134,13 @@
               <span class="menu-item-label">Bill</span>
             </div><!-- menu-item -->
           </a><!-- br-menu-link -->
+          {{-- Faq --}}
+          <a href="{{ route('faq.index') }}" class="br-menu-link @yield('faq')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Faq</span>
+            </div><!-- menu-item -->
+          </a><!-- br-menu-link -->
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->

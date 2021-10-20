@@ -12,9 +12,11 @@ class FaqController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+        return view('Backend.Faq.faq',[
+            'faqs'=>Faq::latest()->simplePaginate(),
+            'faqCount'=>Faq::count(),
+        ]);
     }
 
     /**
@@ -33,9 +35,23 @@ class FaqController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        $request->validate([            
+            'question'=>['required'],
+            'answer'=>['required'],            
+        ],[
+            'question.required'=>'Enter Question',
+            'answer.required'=>'Enter Answer',            
+        ]);
+        $faq = new Faq;
+        $faq->question=$request->question;
+        $faq->answer=$request->answer;
+        $faq->save();
+        $notification=array(
+            'message'=>'Question Added Successfully',
+            'alert-type'=>'success',
+        );
+        return back()->with($notification);        
     }
 
     /**
@@ -55,9 +71,10 @@ class FaqController extends Controller
      * @param  \App\Models\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function edit(Faq $faq)
-    {
-        //
+    public function edit(Faq $faq){
+        return view('Backend.Faq.faq-edit',[
+            'faq'=>$faq,
+        ]);
     }
 
     /**
@@ -67,9 +84,15 @@ class FaqController extends Controller
      * @param  \App\Models\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Faq $faq)
-    {
-        //
+    public function update(Request $request, Faq $faq){
+        $faq->question=$request->question;
+        $faq->answer=$request->answer;
+        $faq->save();
+        $notification=array(
+            'message'=>'Question Updated Successfully',
+            'alert-type'=>'success',
+        );
+        return back()->with($notification);  
     }
 
     /**
@@ -78,8 +101,8 @@ class FaqController extends Controller
      * @param  \App\Models\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Faq $faq)
-    {
-        //
+    public function destroy(Faq $faq){
+        $faq->delete();
+        return back();
     }
 }

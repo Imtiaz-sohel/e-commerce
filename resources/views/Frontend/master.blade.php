@@ -117,7 +117,7 @@
                                 <li class="@yield('cart')"><a href="{{ route('cartPage') }}">Cart</a></li>
                                 <li class="@yield('wishlist')"><a href="{{ route('wishlist') }}">Wishlist</a></li>
                                 <li class="@yield('contact')"><a href="{{ route('contacPage') }}">Contact</a></li>
-                                {{-- <li class="@yield('faq')"><a href="{{ route('faq') }}">Faq</a></li> --}}
+                                <li class="@yield('faq')"><a href="{{ route('faq') }}">Faq</a></li>
                                 <li class="@yield('blog')"><a href="#">Blog</a></li>
                             </ul>
                         </nav>
@@ -202,7 +202,7 @@
                                 <li><a href="{{ route('cartPage') }}">Shopping cart</a></li>
                                 <li><a href="{{ route('wishlist') }}">Wishlist</a></li>
                                 <li><a href="{{ route('contacPage') }}">Contact</a></li>
-                                {{-- <li><a href="{{ route('faq') }}">Faq</a></li> --}}
+                                <li><a href="{{ route('faq') }}">Faq</a></li>
                                 <li><a href="contact.html">Blog</a></li>
                             </ul>
                         </div>
@@ -215,7 +215,7 @@
     <!-- header-area end -->
     @yield('content')
      <!-- .footer-area start -->
-     <div class="footer-area">
+     <div class="footer-area mt-5">
         <div class="footer-top">
             <div class="container">
                 <div class="footer-top-item">

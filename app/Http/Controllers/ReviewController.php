@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller{
     function ReviewPost(Request $request){
@@ -29,4 +31,31 @@ class ReviewController extends Controller{
         );
         return back()->with($notification);
     }
+
+    // faq
+
+    function faq(){
+        return view('Frontend.faq',[
+            'faqs'=>Faq::latest()->get(),
+            'faqId' => Faq::latest()->first()->id,
+        ]);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

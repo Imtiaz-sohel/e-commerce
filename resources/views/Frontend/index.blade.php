@@ -235,7 +235,7 @@
                                     <p>{{ $product->summary }}</p>
                                     <ul class="socil-icon">
                                         <li>Share :</li>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php/{{ $product->slug }}"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                         <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                         <li><a href="#"><i class="fa fa-instagram"></i></a></li>

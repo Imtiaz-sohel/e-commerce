@@ -2083,30 +2083,6 @@ margin-left: 15px;
     border-color: #ef4836;
     color: #fff;
 }
-/* pagination css starts */
-.page-link {
-	height: 30px;
-	width: 30px;
-	line-height: 13px;
-	position: relative;
-	display: block;
-	margin: 0 4px;
-	border: 2px solid #ef4836;
-	color: #ef4836;
-	padding-left: 9px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-}
-.page-link:focus, .page-link:hover {
-    background: #ef4836;
-    color: #fff;
-    border-color: #ef4836;
-}
-.page-link i{
-    line-height: 13px;
-}
-/* pagination css ends */
 .product-list .product-content h3 {
     margin-top: 0;
 }
@@ -3476,5 +3452,33 @@ ol {
     background: #fff;
     color: #333;
 }
+
+
+/* pagination css starts */
+.page-link {
+	height: 30px;
+	width: 30px;
+	line-height: 13px;
+	position: relative;
+	display: block;
+	margin: 0 4px;
+	border: 2px solid #ef4836;
+	color: #ef4836;
+	padding-left: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+.page-link:focus, 
+.page-link:hover {
+    background: #ef4836;
+    color: #fff;
+    border-color: #ef4836;
+}
+.page-link i{
+    line-height: 13px;
+}
+
+/* pagination css ends */
 
 

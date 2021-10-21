@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -21,8 +22,6 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
-use App\Models\Faq;
-use App\Models\Wishlist;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -110,7 +109,12 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
    Route::get('/bill-search',[BillController::class,'billSearch'])->name('billSearch');   
    Route::get('/bill-download',[BillController::class,'billDownload'])->name('billDownload');
 //FAQ CONTROLLER STARTS
-   Route::resource('/faq',FaqController::class);      
+   Route::resource('/faq',FaqController::class);
+//BLOG CONTROLLER STARTS
+   Route::resource('/blog',BlogController::class);
+   Route::get('/blog-trash',[BlogController::class,'blogTrash'])->name('blogTrash');    
+   Route::get('/blog-delete/{id}',[BlogController::class,'blogDelete'])->name('blogDelete');    
+   Route::get('/blog-restore/{id}',[BlogController::class,'blogRestore'])->name('blogRestore');    
 });
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
@@ -153,6 +157,13 @@ Route::get('/order-product/{billing_id}',[CheckoutController::class,'orderConfim
 Route::post('/review-post',[ReviewController::class,'ReviewPost'])->name('ReviewPost');
 // faq
 Route::get('/faq',[ReviewController::class,'faq'])->name('faq');
+// blog
+Route::get('/blog',[ReviewController::class,'blogView'])->name('blogView');
+
+
+
+
+
 // Social Login github
 Route::get('login/github',[UserController::class,'redirectToGithubProvider'])->name('github');
 Route::get('login/github/callback',[UserController::class,'handleProviderGithubCallback']);

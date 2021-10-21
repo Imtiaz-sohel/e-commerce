@@ -42,6 +42,12 @@ class ReviewController extends Controller{
 
     }
 
+    // Blog
+
+    function blogView(){
+        return view('Frontend.blog');
+    }
+
 
 
 

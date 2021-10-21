@@ -16,6 +16,7 @@
     <link href="{{ asset('assets/backend/lib/rickshaw/rickshaw.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/lib/chartist/chartist.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    @yield('header_css')
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('assets/backend/css/bracket.css') }}">
   </head>
@@ -134,6 +135,20 @@
               <span class="menu-item-label">Bill</span>
             </div><!-- menu-item -->
           </a><!-- br-menu-link -->
+         {{-- Blog --}}
+         <a href="{{ route('blog.index') }}" class="br-menu-link @yield('blog')">
+            <div class="br-menu-item">
+              <i class="fa fa-folder"></i>
+              <span class="menu-item-label">Blog</span>
+              <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+          </a><!-- br-menu-link -->
+          <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link @yield('listActive')">All Blog</a></li>
+            <li class="nav-item"><a href="{{ route('blog.create') }}" class="nav-link @yield('listActive')">Add Blog</a></li>
+            <li class="nav-item"><a href="{{ route('blogTrash') }}" class="nav-link @yield('listActive')">Blog Trash List</a></li>
+            {{-- <li class="nav-item"><a href="{{ route('contactTrash') }}" class="nav-link @yield('listActive')">Contact Trash</a></li> --}}
+          </ul>
           {{-- Faq --}}
           <a href="{{ route('faq.index') }}" class="br-menu-link @yield('faq')">
             <div class="br-menu-item">

@@ -28,7 +28,7 @@
     <div class="container">
         <div class="col-lg-12">
             <div class="section-title  text-center">
-                <h2>Latest News</h2>
+                <h2>{{ $blogs[0]->category->category_name }}</h2>
                 <img src="{{ asset('frontend/assets/images/section-title.png') }}" alt="">
             </div>
         </div>

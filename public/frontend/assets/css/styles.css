@@ -3470,14 +3470,22 @@ ol {
     font-family: 'Poppins', sans-serif;
 }
 .page-link:focus, 
-.page-link:hover {
+.page-link:hover{
     background: #ef4836;
     color: #fff;
     border-color: #ef4836;
 }
+
 .page-link i{
     line-height: 13px;
 }
+
+.active_2{
+    background: #ef4836;
+    color: #fff;
+    border-color: #ef4836; 
+}
+
 
 /* pagination css ends */
 

@@ -18,6 +18,7 @@
             <div class="col-xl-12">
                 <div class="br-section-wrapper">
                     <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10 text-center">ALL Blog({{ $blogCount }})</h6>
+                    <a href="{{ route('blog.create') }}"><i class="fa fa-plus"></i>Add</a>
                     <div class="bd bd-gray-300 rounded table-responsive">
                       <table class="table mg-b-0">
                         <thead>
@@ -53,6 +54,11 @@
                                       @method('DELETE')
                                       <button class="btn btn-outline-danger" type="submit"><i class="fa fa-trash"></i></button>
                                   </form>
+                                  @if($blog->status==1)
+                                    <a class="btn btn-outline-success" href="{{ route('blogStatus',$blog->id) }}">Active</a>
+                                    @else
+                                    <a class="btn btn-outline-danger" href="{{ route('blogStatus',$blog->id) }}">Deactive</a>
+                                  @endif
                               </td>
                             </tr>
                             @endforeach

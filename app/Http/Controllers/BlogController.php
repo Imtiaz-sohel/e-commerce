@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Keywords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -46,6 +47,7 @@ class BlogController extends Controller
         'description'=>['required'],
         'thumbnail'=>['required'],
         'featured_image'=>['required'],           
+        'keywords'=>['required'],           
        ],[
         'category_id.required'=>'Select Category',
         'blog_title.required'=>'Enter Blog Title',
@@ -53,6 +55,7 @@ class BlogController extends Controller
         'description.required'=>'Enter Blog Description',
         'thumbnail.required'=>'Enter Blog Thumbnail',
         'featured_image.required'=>'Enter Blog Featured Image',
+        'keywords.required'=>'Enter Tag',
        ]);
        $blog = new Blog;
        $blog->user_id=Auth::id();
@@ -73,6 +76,14 @@ class BlogController extends Controller
           Image::make($featuredImage)->save(public_path('Blog_Image/Featured_Image/'.$fileName));
           $blog->featured_image=$fileName;
           $blog->save();
+       }
+
+       $keywords = $request->keywords;
+       foreach ($keywords as $key => $keyword) {
+          $key = new Keywords;
+          $key->blog_id=$blog->id;
+          $key->keywords=$keyword;
+          $key->save();
        }
        $notification=array(
            'message'=>'Blog Inserted Successfully',
@@ -160,8 +171,6 @@ class BlogController extends Controller
         return back()->with($notification);
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -170,6 +179,7 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog){
         $blog->delete();
+        Keywords::where('blog_id',$blog->id)->delete();
         $notification=array(
             'message'=>'Blog Moved To Trashed',
             'alert-type'=>'warning',
@@ -186,6 +196,7 @@ class BlogController extends Controller
 
     function blogDelete($id){
        Blog::onlyTrashed()->findOrFail($id)->forceDelete();
+       Keywords::onlyTrashed()->where('blog_id',$id)->forceDelete();
         $notification=array(
             'message'=>'Blog Deleted Permanently',
             'alert-type'=>'warning',
@@ -195,10 +206,24 @@ class BlogController extends Controller
 
     function blogRestore($id){
         Blog::onlyTrashed()->findOrFail($id)->restore();
+        Keywords::onlyTrashed()->where('blog_id',$id)->restore();
         $notification=array(
             'message'=>'Blog Restored Successfully',
             'alert-type'=>'success',
         );
         return back()->with($notification);
+    }
+
+    function blogStatus($id){
+        $blog = Blog::where('id',$id)->first();
+        if ($blog->status==1) {
+            $blog->status=2;
+            $blog->save();
+        }
+        else{
+            $blog->status=1;
+            $blog->save();
+        }
+        return back();
     }
 }

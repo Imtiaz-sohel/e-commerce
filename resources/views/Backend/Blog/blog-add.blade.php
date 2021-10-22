@@ -88,8 +88,8 @@
                         <div class="row mt-4">
                             <label class="col-sm-2 form-control-label"><span class="tx-danger">*</span> Blog Keywords:</label>
                             <div class="col-sm-8 mg-t-10 mg-sm-t-0">
-                                <select id="keywords" class="form-control" multiple data-role="tagsinput" name="keywords[]" placeholder="Tags"></select>
-                              @error('featured_image')
+                                <select id="keywords" class="form-control @error('keywords') is-invalid  @enderror" multiple data-role="tagsinput" name="keywords[]" placeholder="Tags"></select>
+                              @error('keywords')
                                   <div class="text-danger">
                                       {{ $message }}
                                   </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\BlogcommentController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
@@ -115,6 +116,7 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
    Route::get('/blog-trash',[BlogController::class,'blogTrash'])->name('blogTrash');    
    Route::get('/blog-delete/{id}',[BlogController::class,'blogDelete'])->name('blogDelete');    
    Route::get('/blog-restore/{id}',[BlogController::class,'blogRestore'])->name('blogRestore');    
+   Route::get('/blog-status/{id}',[BlogController::class,'blogStatus'])->name('blogStatus');    
 });
 
 Route::get('api/get-sub-category-list/{cat_id}',[ProductController::class,'getSubCategory']);
@@ -159,11 +161,10 @@ Route::post('/review-post',[ReviewController::class,'ReviewPost'])->name('Review
 Route::get('/faq',[ReviewController::class,'faq'])->name('faq');
 // blog
 Route::get('/blog',[ReviewController::class,'blogView'])->name('blogView');
-
-
-
-
-
+Route::get('/single-blog/{slug}',[ReviewController::class,'singleBlog'])->name('singleBlog');
+Route::get('/blog-by-category/{id}',[ReviewController::class,'blogByCategory'])->name('blogByCategory');
+// BLOG COMMENT CONTROLLER STARTS
+Route::post('/blog-comment',[BlogcommentController::class,'blogComment'])->name('blogComment');
 // Social Login github
 Route::get('login/github',[UserController::class,'redirectToGithubProvider'])->name('github');
 Route::get('login/github/callback',[UserController::class,'handleProviderGithubCallback']);

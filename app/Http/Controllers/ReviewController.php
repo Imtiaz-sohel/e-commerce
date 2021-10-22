@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\BlogComment;
+use App\Models\Category;
 use App\Models\Faq;
+use App\Models\Keywords;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,23 +49,26 @@ class ReviewController extends Controller{
     // Blog
 
     function blogView(){
-        return view('Frontend.blog');
+        return view('Frontend.blog',[
+            'blogs'=>Blog::with('User')->latest()->paginate(3),
+        ]);
     }
 
+    function singleBlog($slug){
+        Blog::where('slug',$slug)->first()->increment('views');
+        $blog=Blog::with('user')->where('slug',$slug)->first();
+        return view('Frontend.blog-details',[
+            'blog'=>$blog,
+            'categories'=>Category::with('blog')->get(),
+            'lBlogs'=>Blog::latest()->take(4)->get(),
+            'blogComments'=>BlogComment::where('blog_id',$blog->id)->latest()->get(),
+            'blogCommentCount'=>BlogComment::where('blog_id',$blog->id)->count(),
+        ]);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    function blogByCategory($id){
+        return view('Frontend.blog-by-category',[
+            'blogs'=>Blog::with(['category'])->where('category_id',$id)->paginate(3),
+        ]);
+    }
 }

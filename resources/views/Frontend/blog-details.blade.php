@@ -133,7 +133,7 @@
                         <h4 class="widget-title">Categories</h4>
                         <ul>
                             @foreach($categories as $key => $category)
-                              <li><a href="{{ route('blogByCategory',$category->id) }}">{{ $category->category_name }} ({{ $category->blog->count() }})</a></li>
+                              <li><a href=" @if($category->blog->count()>0) {{ route('blogByCategory',$category->id) }} @endif">{{ $category->category_name }} ({{ $category->blog->count() }})</a></li>
                             @endforeach
                         </ul>
                     </div>

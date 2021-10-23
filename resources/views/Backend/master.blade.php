@@ -33,6 +33,22 @@
             <span class="menu-item-label">Dashboard</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+        {{-- Role Manager --}}
+        @role('admin')
+        <a href="#" class="br-menu-link @yield('role')">
+            <div class="br-menu-item">
+                <i class="fa fa-folder"></i>
+                <span class="menu-item-label">Role Manager</span>
+                <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+            </a><!-- br-menu-link -->
+        <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{ route('permission') }}" class="nav-link @yield('permissonActive')">All Permission</a></li>
+            <li class="nav-item"><a href="{{ route('allRole') }}" class="nav-link @yield('roleActive')">All Role</a></li>
+            <li class="nav-item"><a href="{{ route('roleSyncPermission') }}" class="nav-link @yield('roleSyncPermission')">Role Sync Permission</a></li>
+            <li class="nav-item"><a href="{{ route('roleSyncUser') }}" class="nav-link @yield('userActive')">Role Sync User</a></li>
+        </ul>
+        @endrole
         {{-- Category List --}}
         <a href="{{ route('category.index') }}" class="br-menu-link @yield('category')">
             <div class="br-menu-item">

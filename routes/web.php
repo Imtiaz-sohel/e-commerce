@@ -18,6 +18,7 @@ use App\Http\Controllers\FeaturedProductController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TestimonialController;
@@ -25,7 +26,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,9 +39,24 @@ use Laravel\Socialite\Facades\Socialite;
 */
 
 require __DIR__.'/auth.php';
+// ROLE CONTROLLER STARTS
+Route::get('/all-permission',[RoleController::class,'allPermission'])->name('permission');
+Route::post('/all-permission-post',[RoleController::class,'permissionPost'])->name('permissionPost');
+Route::get('/all-permission-edit/{permission_id}',[RoleController::class,'permissionEdit'])->name('permissionEdit');
+Route::post('/all-permission-update',[RoleController::class,'permissionUpdatePost'])->name('permissionUpdatePost');
+Route::get('/all-permission-delete/{permission_id}',[RoleController::class,'permissionDelete'])->name('permissionDelete');
+Route::get('/all-role',[RoleController::class,'allRole'])->name('allRole');
+Route::post('/all-role-post',[RoleController::class,'rolePost'])->name('rolePost');
+Route::get('/all-role-edit/{role_id}',[RoleController::class,'roleEdit'])->name('roleEdit');
+Route::post('/all-role-update',[RoleController::class,'roleUpdate'])->name('roleUpdate');
+Route::get('/all-role-delete/{role_id}',[RoleController::class,'roleDelete'])->name('roleDelete');
+Route::get('/role-sync-permission',[RoleController::class,'roleSyncPermission'])->name('roleSyncPermission');
+Route::post('/role-sync-post',[RoleController::class,'roleSyncPost'])->name('roleSyncPost');
+Route::get('/role-sync-user',[RoleController::class,'roleSyncUser'])->name('roleSyncUser');
+Route::post('/role-sync-user-post',[RoleController::class,'roleSyncUserPost'])->name('roleSyncUserPost');
 
 // DASHBOARD CONTROLLER STARTS
-Route::group(['middleware'=>'auth','prefix'=>'admin'],function(){
+Route::group(['middleware'=>['role:admin|writter|editor|viewer'],'prefix'=>'admin'],function(){
   Route::get('/dashboard',[DashboardController::class,'dashboardPage'])->name('dashboardPage');
 //CATEGORY CONTROLLER    
   Route::resource('/category',CategoryController::class);

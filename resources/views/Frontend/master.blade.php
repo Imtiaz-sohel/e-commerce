@@ -73,7 +73,7 @@
                                 <a href="javascript:void(0);"><i class="fa fa-user"></i>My Account<i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown_style">
                                     @auth
-                                      <li><a href="#">Profile</a></li>
+                                      <li><a href="#">{{ Auth::user()->name }}</a></li>
                                       <li><a href="{{ route('wishlist') }}">wishlist</a></li>
                                     @else      
                                      <li><a href="{{ route('userRegister') }}">Register</a></li>
